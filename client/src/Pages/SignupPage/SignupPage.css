@@ -1,26 +1,16 @@
-.loginPageContainer {
-  margin-left: 250px;
-  margin-right: 250px;
-  margin-top: 100px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.phoneImageContainer img {
-  height: 550px;
-}
-
-.loginFormContainer {
+.signupFormContainer {
   border: 2px solid #949494;
+  margin-right: 500px;
+  margin-left: 500px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 550px;
+  height: 650px;
   align-items: center;
 }
 
-.loginFormContainer img {
+.signupFormContainer img {
   width: 350px;
 }
 
@@ -42,16 +32,16 @@
   padding-left: 10px;
 }
 
-.signUp {
+.logIn {
   font-size: 15px;
   display: flex;
   justify-content: center;
 }
-.signUp a {
+.logIn a {
   color: #027ffe;
 }
 
-/* Login Button Css */
+/* SignUp Button Css */
 .button-22 {
   align-items: center;
   appearance: button;
