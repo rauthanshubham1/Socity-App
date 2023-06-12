@@ -1,14 +1,16 @@
 .navbar {
+  border: 2px solid #047efd;
   background-color: black;
   border-radius: 25px;
   width: 700px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 40px;
 }
 
 .navbar ul {
+  /* border: 2px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,6 +18,7 @@
 }
 
 .navbar li {
+  /* border: 2px solid red; */
   list-style: none;
   margin: 0px 20px;
 }
@@ -23,4 +26,12 @@
 .navbar li a {
   text-decoration: none;
   color: white;
+}
+
+.navbar img {
+  /* border: 2px solid red; */
+  margin-top: 4px;
+  max-width: 100%;
+  height: 35px;
+  border-radius: 30px;
 }
