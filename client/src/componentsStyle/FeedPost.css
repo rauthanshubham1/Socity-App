@@ -4,16 +4,22 @@
 }
 
 .feedPost {
-  /* border: 2px solid red; */
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 10px 20px;
+  justify-content: center;
+  /* border: 2px solid red; */
+  width: 100%;
+  max-width: 50%;
+  display: flex;
+  padding: 10px 25%;
 }
 
 .feedPost img {
-  max-height: 100%;
   max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: contain;
+  margin: 0 auto;
 }
 
 .postActions {
