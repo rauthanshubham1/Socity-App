@@ -3,6 +3,7 @@ const User = require("../models/schema");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
+
 // Login route or homepage route
 router.post("/", async (req, res) => {
     try {
@@ -15,19 +16,21 @@ router.post("/", async (req, res) => {
             const checkPassword = await bcrypt.compare(password, existUser.password);
             if (checkPassword) {
                 const token = await existUser.generateToken();
-                console.log(token);
-                res.status(200).json({ message: "Login successful" });
+                res.cookie("sessionTkn", token, {
+                    expires: new Date(Date.now() + 86400000),
+                    httpOnly: true
+                });
+                return res.status(200).json({ "message": "Login successful" });
             } else {
-                res.status(401).json({ error: "Invalid credentials " });
+                return res.status(401).json({ "error": "Invalid credentials " });
             }
         } else {
-            res.status(401).json({ error: "Invalid credentials " });
+            return res.status(401).json({ "error": "Invalid credentials " });
         }
     } catch (err) {
         console.log(err);
     }
 })
-
 
 
 // Signup route
@@ -48,12 +51,24 @@ router.post("/signup", async (req, res) => {
         const newUser = new User({ name, email, phone, password });
         await newUser.save();
         console.log(newUser);
-        res.status(201).json({ "message": "User registered successfully" })
+        return res.status(201).json({ "message": "User registered successfully" })
     } catch (err) {
         console.log(err);
     }
-
 })
+
+// router.get(":id")
+router.get('/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    console.log(userId);
+    if (!userId) {
+        return res.status(404).json({ "error": "page not found" });
+    }
+    const user = await User.findOne({ _id: userId });
+    res.send(user);
+
+});
+
 
 
 module.exports = router;

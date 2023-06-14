@@ -41,7 +41,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <Link to="/">
-                        <i className="fa-solid fa-right-from-bracket" style={{ "color": "#ffffff" }}></i>
+                        <i className="fa-solid fa-right-from-bracket fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
 

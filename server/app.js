@@ -6,7 +6,6 @@ require("./db/connect");
 const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(require("./router/routes"));
-const User = require("./models/schema")
 
 app.listen(PORT, () => {
     console.log("Running on port ", PORT);

@@ -9,6 +9,7 @@
 
 .phoneImageContainer img {
   height: 550px;
+  border-radius: 30px;
 }
 
 .loginFormContainer {
@@ -46,6 +47,7 @@
   font-size: 15px;
   display: flex;
   justify-content: center;
+  color: white;
 }
 .signUp a {
   color: #027ffe;
