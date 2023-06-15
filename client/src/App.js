@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import MainPage from './Pages/MainPage/MainPage';
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage"
 import { Route, Routes } from "react-router-dom"
-
+import Feed from './components/Feed';
+import Profile from './components/Profile';
+import AllMessages from './components/AllMessages';
+import LogoutPage from './Pages/LogoutPage/LogoutPage';
+const isUserVerfied = createContext();
 
 const App = () => {
+
+
   return (
-    <>
-      {/* <MainPage /> */}
-      {true ?
-        <Routes>
-          <Route exact path='/' element={<LoginPage />}></Route>
-          <Route exact path='/signup' element={<SignupPage />}></Route>
-        </Routes>
-        :
-        <div>Hello</div>
-      }
+
+    // <isUserVerfied.Provider value={{ verified, userData }}>
+
+    <Routes >
+      <Route exact path='/' element={<LoginPage />}></Route>
+      <Route exact path='/signup' element={<SignupPage />}></Route>
+      < Route path='/user' element={< MainPage />}>
+        <Route path='feed' element={<Feed />}></Route>
+        <Route path='profile' element={<Profile />}></Route>
+        <Route path='messages' element={<AllMessages />}></Route>
+      </Route >
+      <Route path='/logout' element={<LogoutPage />}></Route>
+    </Routes>
 
 
-
-    </>
+    // </isUserVerfied.Provider >
   )
 }
 
 export default App;
+export { isUserVerfied };

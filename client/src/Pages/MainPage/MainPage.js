@@ -1,13 +1,13 @@
 import React from 'react'
 import NavBar from '../../components/NavBar'
-import { Route, Routes } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import "./MainPage.css"
 import AccSuggestion from '../../components/AccSuggestion'
 import Header from '../../components/Header'
-import Feed from '../../components/Feed'
-import Profile from '../../components/Profile'
-import AllMessages from '../../components/AllMessages'
+
 const MainPage = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="container">
             <div className='upperContainer'>
@@ -23,20 +23,8 @@ const MainPage = () => {
 
                 </div>
                 <div className='feed'>
-
-                    <Routes>
-                        <Route exact path='/feed' element={<Feed />}></Route>
-                        <Route exact path='/youraccount' element={<Profile />}></Route>
-                        <Route exact path='/messages' element={<AllMessages />}></Route>
-                        <Route exact path='' element=""></Route>
-                        <Route exact path='' element=""></Route>
-                    </Routes>
-
-
-
-                    {/* <Feed /> */}
-                    {/* <Profile /> */}
-
+                    <Outlet>
+                    </Outlet>
                 </div>
             </div>
         </div>

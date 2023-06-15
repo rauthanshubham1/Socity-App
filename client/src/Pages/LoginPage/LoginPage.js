@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import "./LoginPage.css";
 import loginPageImg from "../../assets/loginPageImg.png"
 import LogoNoBg from "../../assets/LogoNoBg.png"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [userData, setUserData] = useState({ email: "", password: "" })
-
+    const navigate = useNavigate();
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -21,7 +21,7 @@ const LoginPage = () => {
                 window.alert("Please fill all fields");
                 return;
             }
-            const res = await fetch("/", {
+            const res = await fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -33,6 +33,7 @@ const LoginPage = () => {
             console.log(data);
             if (res.status === 200) {
                 window.alert(data.message);
+                navigate("/user/feed");
             } else {
                 window.alert(data.error);
                 setUserData({ email: "", password: "" })

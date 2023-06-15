@@ -2,10 +2,12 @@ const express = require("express");
 const User = require("../models/schema");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
+const authentication = require("../middleware/auth")
+const cookieParser = require("cookie-parser");
+router.use(cookieParser());
 
 // Login route or homepage route
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -57,18 +59,36 @@ router.post("/signup", async (req, res) => {
     }
 })
 
-// router.get(":id")
-router.get('/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    console.log(userId);
-    if (!userId) {
-        return res.status(404).json({ "error": "page not found" });
+// Feed page
+router.get("/profile", authentication, async (req, res) => {
+    try {
+        const userData = req.userData;
+        if (!(userData._id)) {
+            return res.status(404).json({ "error": "page not found" });
+        }
+        const userName = userData.name;
+        const userPosts = userData.posts;
+        return res.status(200).send({ userName, userPosts });
+    } catch (err) {
+        console.log(err);
     }
-    const user = await User.findOne({ _id: userId });
-    res.send(user);
 
+})
+
+
+// Verify User
+router.get('/verifyUser', authentication, (req, res) => {
+    res.status(200).send(req.userData);
 });
 
 
-
+// Logout User
+router.get("/logout", async (req, res) => {
+    try {
+        res.clearCookie("sessionTkn", { path: "/" });
+        res.status(200).json({ "message": "User Logged Out" });
+    } catch (error) {
+        console.log(err);
+    }
+})
 module.exports = router;
