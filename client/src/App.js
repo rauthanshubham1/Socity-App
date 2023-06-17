@@ -7,10 +7,10 @@ import Feed from './components/Feed';
 import Profile from './components/Profile';
 import AllMessages from './components/AllMessages';
 import LogoutPage from './Pages/LogoutPage/LogoutPage';
+import ErrorPage from './Pages/ErrorPage/ErrorPage';
 const isUserVerfied = createContext();
 
 const App = () => {
-
 
   return (
 
@@ -20,11 +20,13 @@ const App = () => {
       <Route exact path='/' element={<LoginPage />}></Route>
       <Route exact path='/signup' element={<SignupPage />}></Route>
       < Route path='/user' element={< MainPage />}>
+        <Route index path='*' element={<ErrorPage />}></Route>
         <Route path='feed' element={<Feed />}></Route>
         <Route path='profile' element={<Profile />}></Route>
         <Route path='messages' element={<AllMessages />}></Route>
       </Route >
       <Route path='/logout' element={<LogoutPage />}></Route>
+      <Route path='/*' element={<ErrorPage />}></Route>
     </Routes>
 
 

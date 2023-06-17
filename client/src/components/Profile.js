@@ -59,8 +59,8 @@ const Profile = () => {
                 <div className='accountPosts'>
                     {user.posts.map(post => {
                         return (
-                            <div className="userPost">
-                                <img src={post.imgUrl} alt="" />
+                            <div className="userPost" key={post._id}>
+                                <img src={post.imageUrl} alt="" />
                             </div>
                         )
                     })}
