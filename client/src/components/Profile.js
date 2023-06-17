@@ -4,7 +4,13 @@ import Header from "./Header"
 import { useNavigate } from "react-router-dom"
 
 const Profile = () => {
-    const [user, setUser] = useState({ name: "", posts: [] });
+    const [user, setUser] = useState({
+        name: "",
+        posts: [],
+        followers: [],
+        following: [],
+        profilePic: ""
+    });
     const navigate = useNavigate();
     useEffect(() => {
         verifyUser();
@@ -23,7 +29,14 @@ const Profile = () => {
 
             const data = await res.json();
             if (res.status === 200) {
-                setUser({ ...user, name: data.name, posts: data.posts });
+                setUser({
+                    ...user,
+                    name: data.name,
+                    posts: data.posts,
+                    followers: data.followers,
+                    following: data.following,
+                    profilePic: data.profilePic
+                });
                 navigate("/user/profile");
             } else {
                 const error = new Error(res.error)
@@ -36,14 +49,13 @@ const Profile = () => {
         }
     }
 
-
     return (
         <>
             <Header heading="Your Profile" />
             <div className='profileContainer'>
                 <div className='profileDetails'>
                     <div className='profileImg'>
-                        <img src="https://plus.unsplash.com/premium_photo-1686174386454-1e303af1c90d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2232&q=80" alt="" />
+                        <img src={user.profilePic} alt="" />
                     </div>
                     <div className='accountData'>
                         <div className="userName">
@@ -51,19 +63,21 @@ const Profile = () => {
                         </div>
                         <div className='data'>
                             <Header heading={`${user.posts.length} Posts`} />
-                            <Header heading={"2912 Followers"} />
-                            <Header heading={"12 Following"} />
+                            <Header heading={`${user.followers.length} Following`} />
+                            <Header heading={`${user.following.length} Following`} />
                         </div>
                     </div>
                 </div>
                 <div className='accountPosts'>
-                    {user.posts.map(post => {
-                        return (
-                            <div className="userPost" key={post._id}>
-                                <img src={post.imageUrl} alt="" />
-                            </div>
-                        )
-                    })}
+                    {
+                        user.posts.map(post => {
+                            return (
+                                <div className="userPost" key={post._id} >
+                                    <img src={post.imageUrl} alt="" />
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </>

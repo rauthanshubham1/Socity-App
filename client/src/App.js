@@ -20,8 +20,7 @@ const App = () => {
       <Route exact path='/' element={<LoginPage />}></Route>
       <Route exact path='/signup' element={<SignupPage />}></Route>
       < Route path='/user' element={< MainPage />}>
-        <Route index path='*' element={<ErrorPage />}></Route>
-        <Route path='feed' element={<Feed />}></Route>
+        <Route index path='feed' element={<Feed />}></Route>
         <Route path='profile' element={<Profile />}></Route>
         <Route path='messages' element={<AllMessages />}></Route>
       </Route >

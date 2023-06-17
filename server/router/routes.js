@@ -82,6 +82,21 @@ router.get('/verifyUser', authentication, (req, res) => {
 });
 
 
+// Upload Post
+router.post("/uploadPost", async (req, res) => {
+    const { _id, imageUrl } = req.body;
+    if (!_id || !imageUrl) { return res.status(400).json({ "error": "Incomplete Data" }) };
+    const user = await User.findOne({ _id });
+    const result = await user.uploadPost(imageUrl);
+    if(result){
+        return res.status(200).json({ "Message": "Post Uploaded" }) 
+    }else{
+        return res.status(400).json({ "error": "Try Again" }) 
+    }
+
+})
+
+
 // Logout User
 router.get("/logout", async (req, res) => {
     try {

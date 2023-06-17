@@ -33,9 +33,11 @@ const userSchema = mongoose.Schema({
                 },
                 likes: {
                     type: Number,
+                    default: 0
                 },
                 comments: {
                     type: String,
+                    default: 0
                 },
             }
         ],
@@ -46,7 +48,28 @@ const userSchema = mongoose.Schema({
                 required: true,
             }
         }
-    ]
+    ],
+    followers: [
+        {
+            followerId: {
+                type: String,
+                default: 0
+            }
+        }
+    ],
+    following: [
+        {
+            followingId: {
+                type: String,
+                default: 0
+            }
+        }
+    ],
+    profilePic: {
+        type: String,
+        default: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
+    }
+
 })
 
 
@@ -61,9 +84,20 @@ userSchema.pre("save", async function (next) {
     }
 })
 
+userSchema.methods.uploadPost = async function (imageUrl) {
+    try {
+        this.posts = [...this.posts, { imageUrl }];
+        await this.save();
+        return true;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
 userSchema.methods.generateToken = async function () {
     try {
-        const token =  jwt.sign({ _id: this._id }, process.env.SECRETKEY);
+        const token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);
         this.tokens = [...this.tokens, { token: token }];
         await this.save();
         return token;

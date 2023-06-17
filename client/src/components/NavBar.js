@@ -2,14 +2,40 @@ import React from 'react'
 import "../componentsStyle/NavBar.css"
 import { Link, useNavigate } from 'react-router-dom'
 import LogoNoBg from "../assets/LogoNoBg.png"
-const NavBar = () => {
-    const handleSearch = (e) => {
+const NavBar = ({ userData }) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
-        const userEmail = prompt("Enter the email of the person you want to search");
+        try {
+            const userEmail = prompt("Enter the email of the person you want to search");
+        } catch (err) {
+            console.log(err);
+        }
+
     }
-    const handleUpload = (e) => {
+    const handleUpload = async (e) => {
         e.preventDefault();
-        const imgSrc = prompt("Enter the image source you want to upload");
+        try {
+            const imgSrc = prompt("Enter the image source you want to upload");
+            if (!imgSrc) { return }
+            const res = await fetch("/uploadPost", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ _id: userData._id, imageUrl: imgSrc })
+            });
+
+            const data = await res.json();
+            console.log(data);
+            if (res.status === 200) {
+                console.log("Post Uploaded");
+            } else {
+                const error = new Error(res.error)
+                throw error;
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
