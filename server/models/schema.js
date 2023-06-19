@@ -106,6 +106,41 @@ userSchema.methods.generateToken = async function () {
     }
 }
 
+userSchema.methods.toggleFollowing = async function (searchedUserData, followStatus) {
+    try {
+        if (followStatus) {
+            // means we want to unfollow
+            this.following = this.following.filter(obj => { return (obj.followingId !== searchedUserData._id) })
+            await this.save();
+            return false;
+        } else {
+            // means we want to follow
+            this.following = [...this.following, { followingId: searchedUserData._id }];
+            await this.save();
+            return true;
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+userSchema.methods.toggleFollower = async function (userData, followStatus) {
+    try {
+        if (followStatus) {
+            // means we want to unfollow
+            this.followers = this.followers.filter(obj => (obj.followerId !== (userData._id).toString()))
+            await this.save();
+            return false;
+        } else {
+            // means we want to follow
+            this.followers = [...this.followers, { followerId: userData._id }];
+            await this.save();
+            return true;
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

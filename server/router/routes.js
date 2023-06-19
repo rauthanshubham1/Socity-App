@@ -84,16 +84,70 @@ router.get('/verifyUser', authentication, (req, res) => {
 
 // Upload Post
 router.post("/uploadPost", async (req, res) => {
-    const { _id, imageUrl } = req.body;
-    if (!_id || !imageUrl) { return res.status(400).json({ "error": "Incomplete Data" }) };
-    const user = await User.findOne({ _id });
-    const result = await user.uploadPost(imageUrl);
-    if(result){
-        return res.status(200).json({ "Message": "Post Uploaded" }) 
-    }else{
-        return res.status(400).json({ "error": "Try Again" }) 
+    try {
+        const { _id, imageUrl } = req.body;
+        if (!_id || !imageUrl) { return res.status(400).json({ "error": "Incomplete Data" }) };
+        const user = await User.findOne({ _id });
+        const result = await user.uploadPost(imageUrl);
+        if (result) {
+            return res.status(200).json({ "Message": "Post Uploaded" })
+        } else {
+            return res.status(400).json({ "error": "Try Again" })
+        }
+    } catch (err) {
+        console.log(err);
     }
+})
 
+// Search User
+router.post("/searchUser", async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) { return res.status(400).json({ "error": "Incomplete Data" }) };
+        const user = await User.findOne({ email });
+        if (user) {
+            return res.status(200).send(user)
+        } else {
+            return res.status(400).json({ "error": "User doesn't exist" })
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+// Check follow status
+router.post("/checkFollowStatus", authentication, async (req, res) => {
+    try {
+        userData = req.userData;
+        searchedUserData = req.body;
+        if (!searchedUserData.event) {
+            const result = userData.following.find(user => user.followingId === searchedUserData._id);
+            if (!result) {
+                return res.status(404).json({ "message": "User is not followed" })
+            } else {
+                return res.status(200).json({ "message": "User is followed" })
+            }
+        } else {
+            if (searchedUserData.followStatus) {
+                // IT means following so make it unfollow
+                await userData.toggleFollowing(searchedUserData, searchedUserData.followStatus);
+                const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });
+                await newSearchedUserData.toggleFollower(userData, searchedUserData.followStatus);
+                const sendSearchedUserData = await User.findOne({ _id: searchedUserData._id });
+                res.status(200).send(sendSearchedUserData);
+            }
+            else {
+                // IT means not following so make it follow
+                await userData.toggleFollowing(searchedUserData, searchedUserData.followStatus);
+                const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });
+                await newSearchedUserData.toggleFollower(userData, searchedUserData.followStatus);
+                const sendSearchedUserData = await User.findOne({ _id: searchedUserData._id });
+                res.status(200).send(sendSearchedUserData);
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 

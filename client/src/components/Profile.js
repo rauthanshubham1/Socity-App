@@ -63,7 +63,7 @@ const Profile = () => {
                         </div>
                         <div className='data'>
                             <Header heading={`${user.posts.length} Posts`} />
-                            <Header heading={`${user.followers.length} Following`} />
+                            <Header heading={`${user.followers.length} Followers`} />
                             <Header heading={`${user.following.length} Following`} />
                         </div>
                     </div>

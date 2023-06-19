@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import AllMessages from './components/AllMessages';
 import LogoutPage from './Pages/LogoutPage/LogoutPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
+import SearchedUser from './Pages/SearchedUser/SearchedUser';
 const isUserVerfied = createContext();
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
     <Routes >
       <Route exact path='/' element={<LoginPage />}></Route>
       <Route exact path='/signup' element={<SignupPage />}></Route>
+      <Route exact path='/searchedUser' element={<SearchedUser />}></Route >
       < Route path='/user' element={< MainPage />}>
         <Route index path='feed' element={<Feed />}></Route>
         <Route path='profile' element={<Profile />}></Route>

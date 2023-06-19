@@ -3,10 +3,29 @@ import "../componentsStyle/NavBar.css"
 import { Link, useNavigate } from 'react-router-dom'
 import LogoNoBg from "../assets/LogoNoBg.png"
 const NavBar = ({ userData }) => {
+
+    const navigate = useNavigate();
+
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
             const userEmail = prompt("Enter the email of the person you want to search");
+            if (!userEmail) { return }
+            const res = await fetch("/searchUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: userEmail })
+            });
+            const data = await res.json();
+            if (res.status === 200) {
+                console.log("User found");
+                navigate("/searchedUser", { state: data });
+            } else {
+                const error = new Error(res.error)
+                throw error;
+            }
         } catch (err) {
             console.log(err);
         }
