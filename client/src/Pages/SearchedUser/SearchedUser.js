@@ -8,7 +8,7 @@ const SearchedUser = () => {
     const searchedUserData = location.state;
     const navigate = useNavigate();
     const [isFollowed, setIsFollowed] = useState(false);
-    const [newSearchedUserData, setNewsSearchedUserData] = useState(searchedUserData);
+    const [newSearchedUserData, setNewSearchedUserData] = useState(searchedUserData);
 
     useEffect(() => {
         checkFollowStatus();
@@ -28,8 +28,11 @@ const SearchedUser = () => {
             const data = await res.json();
             if (res.status === 200) {
                 setIsFollowed(true);
+                setNewSearchedUserData(data.newSearchedUser);
+
             } else {
                 setIsFollowed(false);
+                setNewSearchedUserData(data.newSearchedUser);
             }
         } catch (err) {
             console.log(err);
@@ -50,7 +53,7 @@ const SearchedUser = () => {
             const data = await res.json();
             checkFollowStatus();
             setIsFollowed(!isFollowed);
-            setNewsSearchedUserData(data);
+            setNewSearchedUserData(data);
         } catch (err) {
             console.log(err);
         }

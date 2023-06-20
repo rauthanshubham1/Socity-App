@@ -121,11 +121,18 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
         userData = req.userData;
         searchedUserData = req.body;
         if (!searchedUserData.event) {
-            const result = userData.following.find(user => user.followingId === searchedUserData._id);
+            // Use Effect will use this
+            //  check if folw or not
+            const newUserData = await User.findOne({ _id: (userData._id).toString() });
+            //  give searched user followers count
+            const newSearchedUser = await User.findOne({ _id: (searchedUserData._id) });
+            const result = newUserData.following.find(user => user.followingId === searchedUserData._id);
             if (!result) {
-                return res.status(404).json({ "message": "User is not followed" })
+                // Unfollow hai searched user
+                return res.status(404).send({ newUserData, newSearchedUser });
             } else {
-                return res.status(200).json({ "message": "User is followed" })
+                //     // Follow
+                return res.status(200).send({ newUserData, newSearchedUser });
             }
         } else {
             if (searchedUserData.followStatus) {
