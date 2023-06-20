@@ -1,17 +1,21 @@
 import React from 'react'
 import "../componentsStyle/AccSuggestion.css"
-const AccSuggestion = () => {
+import { useNavigate } from 'react-router-dom'
+const AccSuggestion = ({ searchedUserData }) => {
+    const navigate = useNavigate()
+
+    const handleSuggestedUser = () => {
+        navigate("/searchedUser", { state: searchedUserData })
+    }
+
     return (
         <div>
-            <div className='suggestedAcc'>
-                <div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
+            <div className='suggestedAcc' onClick={handleSuggestedUser}>
+                <div className='imgContainer'>
+                    <img src={searchedUserData.profilePic} alt="" />
                 </div>
-                <div className='name'>
-                    Namedscds
-                </div>
-                <div className='btnnn'>
-                    <button className="button-18">Follow</button>
+                <div className='nameContainer'>
+                    {searchedUserData.name}
                 </div>
             </div>
         </div>

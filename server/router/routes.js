@@ -118,11 +118,11 @@ router.post("/searchUser", async (req, res) => {
 // Check follow status
 router.post("/checkFollowStatus", authentication, async (req, res) => {
     try {
-        userData = req.userData;
-        searchedUserData = req.body;
+        const userData = req.userData;
+        const searchedUserData = req.body;
         if (!searchedUserData.event) {
             // Use Effect will use this
-            //  check if folw or not
+            //  check if follow or not
             const newUserData = await User.findOne({ _id: (userData._id).toString() });
             //  give searched user followers count
             const newSearchedUser = await User.findOne({ _id: (searchedUserData._id) });
@@ -131,10 +131,11 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
                 // Unfollow hai searched user
                 return res.status(404).send({ newUserData, newSearchedUser });
             } else {
-                //     // Follow
+                // Follow
                 return res.status(200).send({ newUserData, newSearchedUser });
             }
         } else {
+            // onclick will use this
             if (searchedUserData.followStatus) {
                 // IT means following so make it unfollow
                 await userData.toggleFollowing(searchedUserData, searchedUserData.followStatus);
@@ -152,6 +153,22 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
                 res.status(200).send(sendSearchedUserData);
             }
         }
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+
+// Suggest account
+router.get("/suggestUsers", authentication, async (req, res) => {
+    try {
+        const userData = req.userData;
+        const tempArr1 = [...userData.following]
+        const tempArr2 = tempArr1.map(obj => obj.followingId);
+        const tempArr3 = [...tempArr2, userData._id.toString()];
+        const arrOfOtherUsers = await User.find({ _id: { $nin: tempArr3 } });
+        res.status(200).send(arrOfOtherUsers);
+
     } catch (err) {
         console.log(err);
     }
