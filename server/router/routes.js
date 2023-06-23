@@ -59,22 +59,20 @@ router.post("/signup", async (req, res) => {
     }
 })
 
-// Feed page
-router.get("/profile", authentication, async (req, res) => {
+// Feed post
+router.get("/getFeedPosts", authentication, async (req, res) => {
     try {
-        const userData = req.userData;
-        if (!(userData._id)) {
-            return res.status(404).json({ "error": "page not found" });
-        }
-        const userName = userData.name;
-        const userPosts = userData.posts;
-        return res.status(200).send({ userName, userPosts });
+        const userFollowing = req.userData.following;
+        const tempArr = [];
+        userFollowing.forEach(obj => { tempArr.push(obj.followingId) });
+        const tempArr2 = await User.find({ _id: tempArr });
+        const result = []
+        tempArr2.forEach(obj => result.push(...obj.posts));
+        res.status(200).send(result);
     } catch (err) {
         console.log(err);
     }
-
 })
-
 
 // Verify User
 router.get('/verifyUser', authentication, (req, res) => {

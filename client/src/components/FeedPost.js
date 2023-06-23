@@ -2,14 +2,14 @@ import React from 'react'
 import "../componentsStyle/FeedPost.css"
 import MiniProfile from './MiniProfile'
 
-const FeedPost = (props) => {
+const FeedPost = ({ postData }) => {
     return (
         <div className='feedPostContainer'>
             <div>
-                <MiniProfile />
+                <MiniProfile postData={postData} />
             </div>
             <div className='feedPost'>
-                <img src={props.imgSrc} alt="" />
+                <img src={postData.imageUrl} alt="" />
             </div>
 
             <div className='postActions'>
@@ -22,17 +22,11 @@ const FeedPost = (props) => {
             </div>
 
             <div className='postDetails'>
-                1 Likes and 2 Comments
+                {postData.likes} Likes and {postData.comments} Comments
             </div>
 
             <div className='postTime'>
-                {Date()}
-            </div>
-            <div className='commentArea'>
-                {Date()}
-            </div>
-            <div className='commentArea'>
-                {Date()}
+                {postData.date}
             </div>
 
             <div className='postComment'>

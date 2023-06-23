@@ -11,11 +11,13 @@ const userSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -24,9 +26,30 @@ const userSchema = mongoose.Schema({
     posts:
         [
             {
+                postId: {
+                    type: String,
+                    unique: true,
+                },
+                owner: {
+                    type: String,
+                },
+                ownerPic: {
+                    type: String,
+                    default: "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
+                },
                 date: {
-                    type: Date,
-                    default: Date.now
+                    type: String,
+                    default: function () {
+                        return new Date().toLocaleDateString('en-US', {
+                            weekday: "short",
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric"
+                        });
+                    }
                 },
                 imageUrl: {
                     type: String,
@@ -72,6 +95,18 @@ const userSchema = mongoose.Schema({
 
 })
 
+userSchema.pre('save', async function (next) {
+    try {
+        this.posts.forEach(post => {
+            if (!post.postId) {
+                post.postId = Date.now().toString();
+            }
+        });
+        next();
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 userSchema.pre("save", async function (next) {
     try {
@@ -86,7 +121,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.uploadPost = async function (imageUrl) {
     try {
-        this.posts = [...this.posts, { imageUrl }];
+        this.posts = [...this.posts, { imageUrl, owner: this.name }];
         await this.save();
         return true;
     } catch (err) {

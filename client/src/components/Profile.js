@@ -27,7 +27,8 @@ const Profile = () => {
                 credentials: "include"
             });
 
-            const data = await res.json();
+            let data = await res.json();
+            data.posts = data.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
             if (res.status === 200) {
                 setUser({
                     ...user,
@@ -37,6 +38,7 @@ const Profile = () => {
                     following: data.following,
                     profilePic: data.profilePic
                 });
+
                 navigate("/user/profile");
             } else {
                 const error = new Error(res.error)
@@ -73,7 +75,10 @@ const Profile = () => {
                         user.posts.map(post => {
                             return (
                                 <div className="userPost" key={post._id} >
-                                    <img src={post.imageUrl} alt="" />
+                                    <img
+                                        src={post.imageUrl}
+                                        alt=""
+                                        title={`${post.date} || ${post.likes} Likes || ${post.comments} Comments`} />
                                 </div>
                             )
                         })
