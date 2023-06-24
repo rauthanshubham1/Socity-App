@@ -29,6 +29,7 @@ const Profile = () => {
 
             let data = await res.json();
             data.posts = data.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
+            // console.log(data);
             if (res.status === 200) {
                 setUser({
                     ...user,
@@ -78,7 +79,9 @@ const Profile = () => {
                                     <img
                                         src={post.imageUrl}
                                         alt=""
-                                        title={`${post.date} || ${post.likes} Likes || ${post.comments} Comments`} />
+                                        title={`${post.date} || ${post.likes.length} Likes || ${post.comments.length} Comments`}
+                                    />
+
                                 </div>
                             )
                         })

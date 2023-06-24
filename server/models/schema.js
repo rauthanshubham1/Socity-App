@@ -54,14 +54,29 @@ const userSchema = mongoose.Schema({
                 imageUrl: {
                     type: String,
                 },
-                likes: {
-                    type: Number,
-                    default: 0
-                },
-                comments: {
-                    type: String,
-                    default: 0
-                },
+                likes: [
+                    {
+                        likedBy: {
+                            type: String
+                        },
+                        isLiked: {
+                            type: Boolean,
+                            default: false
+                        }
+                    }
+                ],
+                comments: [
+                    {
+                        commentedBy: {
+                            type: String
+                        },
+                        comment:
+                        {
+                            type: String
+                        }
+
+                    }
+                ],
             }
         ],
     tokens: [
