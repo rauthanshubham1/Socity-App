@@ -25,7 +25,9 @@ const SearchedUser = () => {
                 credentials: "include",
                 body: JSON.stringify(searchedUserData)
             })
-            const data = await res.json();
+            let data = await res.json();
+            data.newSearchedUser.posts = data.newSearchedUser.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
+
             if (res.status === 200) {
                 setIsFollowed(true);
                 setNewSearchedUserData(data.newSearchedUser);
@@ -88,7 +90,7 @@ const SearchedUser = () => {
                     </div>
                     <div className='accountPosts'>
                         {
-                            searchedUserData.posts.map(post => {
+                            newSearchedUserData.posts.map(post => {
                                 return (
                                     <div className="userPost" key={post._id} >
                                         <img src={post.imageUrl} alt="" />

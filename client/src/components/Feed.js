@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const Feed = () => {
     const navigate = useNavigate();
     const [feedPosts, setFeedPosts] = useState([])
+    const [userData, setUserData] = useState({})
     useEffect(() => {
         verifyUser();
         getFeedPosts();
@@ -28,7 +29,10 @@ const Feed = () => {
             if (res.status !== 200) {
                 const error = new Error(res.error)
                 throw error;
+            } else {
+                setUserData(data);
             }
+
 
         } catch (err) {
             console.log(err);
@@ -68,7 +72,7 @@ const Feed = () => {
                 feedPosts.map(post => {
                     return (
                         <div className='feedContainer' key={post.postId}>
-                            <FeedPost postData={post} />
+                            <FeedPost postData={post} userData={userData} />
                         </div>
                     )
                 })

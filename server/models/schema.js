@@ -57,12 +57,8 @@ const userSchema = mongoose.Schema({
                 likes: [
                     {
                         likedBy: {
-                            type: String
+                            type: String,
                         },
-                        isLiked: {
-                            type: Boolean,
-                            default: false
-                        }
                     }
                 ],
                 comments: [
@@ -185,6 +181,42 @@ userSchema.methods.toggleFollower = async function (userData, followStatus) {
             this.followers = [...this.followers, { followerId: userData._id }];
             await this.save();
             return true;
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+userSchema.methods.togglePostLike = async function (_id, postId, isLiked) {
+    try {
+        if (!isLiked) {
+            // Means post is liked by user
+            this.posts = this.posts.filter(post => {
+                if (post.postId === postId) {
+                    post.likes = [...post.likes, { likedBy: _id }];
+                    return true;
+                }
+                return true;
+            })
+            await this.save();
+            return "Liked the post";
+        } else {
+            // Means post is unliked by user
+            this.posts = this.posts.filter(post => {
+
+                if (post.postId === postId) {
+                    post.likes = post.likes.filter(obj => {
+                        if (obj.likedBy === _id) {
+                            return false;
+                        }
+                        return true;
+                    })
+                    return true;
+                }
+                return true;
+            })
+            await this.save();
+            return "Uniked the post";
         }
     } catch (err) {
         console.log(err);

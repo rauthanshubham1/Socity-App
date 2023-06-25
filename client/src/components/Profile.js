@@ -29,7 +29,6 @@ const Profile = () => {
 
             let data = await res.json();
             data.posts = data.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
-            // console.log(data);
             if (res.status === 200) {
                 setUser({
                     ...user,

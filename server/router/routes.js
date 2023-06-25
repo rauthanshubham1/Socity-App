@@ -172,6 +172,17 @@ router.get("/suggestUsers", authentication, async (req, res) => {
     }
 })
 
+// Feed post likes
+router.post("/feedPostLike", async (req, res) => {
+    try {
+        const { _id, postId, isLiked } = req.body;
+        const user = await User.findOne({ "posts.postId": postId });
+        const result = await user.togglePostLike(_id, postId, isLiked);
+        res.status(200).json({ "message": result });
+    } catch (err) {
+        console.log(err)
+    }
+})
 
 // Logout User
 router.get("/logout", async (req, res) => {
