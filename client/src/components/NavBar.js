@@ -78,11 +78,11 @@ const NavBar = ({ userData }) => {
                         <i className="fa-solid fa-message fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="explore">
                         <i className="fa-solid fa-earth-asia fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
-                </li>
+                </li> */}
                 <li>
                     <Link to="upload" onClick={handleUpload}>
                         <i className="fa-solid fa-upload fa-lg" style={{ "color": "#ffffff" }}></i>

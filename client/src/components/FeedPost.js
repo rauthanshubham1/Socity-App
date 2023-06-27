@@ -62,6 +62,26 @@ const FeedPost = ({ postData, userData }) => {
         setYourCmnt(value);
     }
 
+    const handleDeleteCmnt = async (cmnt, postId) => {
+        try {
+            // console.log(cmnt)
+            const res = await fetch("/deleteCmnt", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...cmnt, postId })
+            })
+            const data = await res.json();
+            if (res.status === 200) {
+                setAllCmnts(data);
+            } else {
+                throw new Error("Try again");
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const handleSubmitCmnt = async (e) => {
         try {
             e.preventDefault();
@@ -130,7 +150,7 @@ const FeedPost = ({ postData, userData }) => {
                         <div className="comment" key={obj._id}>
                             {obj.commenterName} ➢ {obj.comment}
                             {obj.commentedBy === userData._id ?
-                                <button style={{ "backgroundColor": "black", "border": "none" }}>
+                                <button style={{ "backgroundColor": "black", "border": "none" }} onClick={() => handleDeleteCmnt(obj, postData.postId)}>
                                     <i className="fa-sharp fa-solid fa-trash" style={{ "color": "red" }}></i>
                                 </button>
                                 : ""}

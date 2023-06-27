@@ -226,7 +226,7 @@ userSchema.methods.togglePostLike = async function (_id, postId, isLiked) {
     }
 }
 
-userSchema.methods.toggleCmnt = async function (postId, comment, commentedBy, commenterName) {
+userSchema.methods.addCmnt = async function (postId, comment, commentedBy, commenterName) {
     try {
         this.posts = this.posts.filter(post => {
             if (post.postId === postId) {
@@ -243,6 +243,28 @@ userSchema.methods.toggleCmnt = async function (postId, comment, commentedBy, co
     }
 }
 
+userSchema.methods.deleteCmnt = async function (commentedBy, commenterName, postId, _id, comment) {
+    try {
+        this.posts = this.posts.filter(post => {
+            if (post.postId.toString() === postId) {
+                post.comments = post.comments.filter(cmnt => {
+                    if (cmnt._id.toString() === _id) {
+                        return false;
+                    }
+                    return true;
+                })
+                return true;
+            }
+            return true;
+        });
+        await this.save();
+        const allCmntsAfterDeletion = this.posts.find(post => post.postId.toString() === postId)
+        return allCmntsAfterDeletion.comments
+
+    } catch (err) {
+        console.log(err)
+    }
+}
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

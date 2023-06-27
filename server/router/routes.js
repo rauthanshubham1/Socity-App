@@ -189,8 +189,20 @@ router.post("/submitPostCmnt", async (req, res) => {
     try {
         const { postId, comment, commentedBy, commenterName } = req.body;
         const user = await User.findOne({ "posts.postId": postId });
-        const objId = await user.toggleCmnt(postId, comment, commentedBy, commenterName)
+        const objId = await user.addCmnt(postId, comment, commentedBy, commenterName)
         res.status(200).json({ "objId": objId });
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+router.post("/deleteCmnt", async (req, res) => {
+    try {
+        const { commentedBy, commenterName, postId, _id, comment } = req.body;
+        const user = await User.findOne({ "posts.postId": postId });
+        const allCmntsAfterDeletion = await user.deleteCmnt(commentedBy, commenterName, postId, _id, comment);
+        res.status(200).send(allCmntsAfterDeletion);
+
     } catch (err) {
         console.log(err)
     }
