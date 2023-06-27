@@ -10,7 +10,6 @@ import LogoutPage from './Pages/LogoutPage/LogoutPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import SearchedUser from './Pages/SearchedUser/SearchedUser';
 const isUserVerfied = createContext();
-
 const App = () => {
 
   return (

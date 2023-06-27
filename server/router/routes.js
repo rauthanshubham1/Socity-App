@@ -184,6 +184,18 @@ router.post("/feedPostLike", async (req, res) => {
     }
 })
 
+// Feed post comments
+router.post("/submitPostCmnt", async (req, res) => {
+    try {
+        const { postId, comment, commentedBy, commenterName } = req.body;
+        const user = await User.findOne({ "posts.postId": postId });
+        const objId = await user.toggleCmnt(postId, comment, commentedBy, commenterName)
+        res.status(200).json({ "objId": objId });
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 // Logout User
 router.get("/logout", async (req, res) => {
     try {

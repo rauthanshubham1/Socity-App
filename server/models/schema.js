@@ -66,6 +66,9 @@ const userSchema = mongoose.Schema({
                         commentedBy: {
                             type: String
                         },
+                        commenterName: {
+                            type: String
+                        },
                         comment:
                         {
                             type: String
@@ -218,6 +221,23 @@ userSchema.methods.togglePostLike = async function (_id, postId, isLiked) {
             await this.save();
             return "Uniked the post";
         }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+userSchema.methods.toggleCmnt = async function (postId, comment, commentedBy, commenterName) {
+    try {
+        this.posts = this.posts.filter(post => {
+            if (post.postId === postId) {
+                post.comments = [...post.comments, { comment, commentedBy, commenterName }];
+                return true;
+            }
+            return true;
+        })
+        await this.save();
+        const objId = this.posts[this.posts.length - 1]._id;
+        return objId;
     } catch (err) {
         console.log(err);
     }

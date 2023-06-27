@@ -45,8 +45,21 @@
   margin: 5px 20px;
 }
 
-.commentArea {
+.commentsSection {
   margin: 5px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  border-bottom: 1px solid #055362;
+  margin: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment button:hover {
+  cursor: pointer;
 }
 
 .postComment {

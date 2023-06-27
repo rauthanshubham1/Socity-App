@@ -8,6 +8,7 @@ const AllMessages = () => {
     const navigate = useNavigate();
     useEffect(() => {
         verifyUser();
+        document.title = "Socity - Messages";
     }, [])
 
     const verifyUser = async () => {
@@ -34,7 +35,7 @@ const AllMessages = () => {
     }
 
     return (
-        <>
+        <div className='allMsgs'>
             <Header heading="Your Messages" />
             <div className="inbox">
                 <Inbox />
@@ -49,18 +50,8 @@ const AllMessages = () => {
                 <Inbox />
                 <Inbox />
                 <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
-                <Inbox />
             </div>
-        </>
+        </div>
 
     )
 }

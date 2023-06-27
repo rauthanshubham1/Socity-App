@@ -1,3 +1,7 @@
+.allMsgs {
+  height: auto;
+}
+
 .inbox {
   border: 2px solid red;
   max-width: 600px;

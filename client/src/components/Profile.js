@@ -14,6 +14,7 @@ const Profile = () => {
     const navigate = useNavigate();
     useEffect(() => {
         verifyUser();
+        document.title = "Socity - Profile";
     }, []);
 
     const verifyUser = async () => {

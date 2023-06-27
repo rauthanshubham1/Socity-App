@@ -11,6 +11,7 @@ const Feed = () => {
     useEffect(() => {
         verifyUser();
         getFeedPosts();
+        document.title = "Socity - Feed";
     }, [])
 
 

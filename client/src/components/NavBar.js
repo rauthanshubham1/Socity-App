@@ -79,15 +79,15 @@ const NavBar = ({ userData }) => {
                     </Link>
                 </li>
                 <li>
+                    <Link to="explore">
+                        <i className="fa-solid fa-earth-asia fa-lg" style={{ "color": "#ffffff" }}></i>
+                    </Link>
+                </li>
+                <li>
                     <Link to="upload" onClick={handleUpload}>
                         <i className="fa-solid fa-upload fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
-                {/* <li>
-                    <Link to="explore">
-                        <i className="fa-solid fa-earth-asia fa-lg" style={{ "color": "#ffffff" }}></i>
-                    </Link>
-                </li> */}
                 <li>
                     <Link to="/search" onClick={handleSearch}>
                         <i className="fa-solid fa-magnifying-glass fa-lg" style={{ "color": "#ffffff" }} ></i>
