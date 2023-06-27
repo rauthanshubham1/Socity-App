@@ -9,7 +9,8 @@ const Profile = () => {
         posts: [],
         followers: [],
         following: [],
-        profilePic: ""
+        profilePic: "",
+        _id: ""
     });
     const navigate = useNavigate();
     useEffect(() => {
@@ -33,6 +34,7 @@ const Profile = () => {
             if (res.status === 200) {
                 setUser({
                     ...user,
+                    _id: data._id,
                     name: data.name,
                     posts: data.posts,
                     followers: data.followers,
@@ -52,6 +54,36 @@ const Profile = () => {
         }
     }
 
+    const changeDp = async () => {
+        try {
+            const dpLink = prompt("Enter the link of the image you want as your profile pic");
+            if (dpLink === "" || !dpLink) { return; }
+            const res = await fetch("/changeProfilepicture", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ _id: user._id, dpLink })
+
+            })
+            const data = await res.json();
+            if (res.status === 200) {
+                setUser({
+                    _id: data._id,
+                    name: data.name,
+                    posts: data.posts,
+                    followers: data.followers,
+                    following: data.following,
+                    profilePic: data.profilePic
+                })
+            } else {
+                throw new Error("Try Again");
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <Header heading="Your Profile" />
@@ -68,6 +100,7 @@ const Profile = () => {
                             <Header heading={`${user.posts.length} Posts`} />
                             <Header heading={`${user.followers.length} Followers`} />
                             <Header heading={`${user.following.length} Following`} />
+                            <button className="button-34" onClick={changeDp} >Change Profile Picture</button>
                         </div>
                     </div>
                 </div>

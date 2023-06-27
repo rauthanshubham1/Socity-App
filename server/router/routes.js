@@ -196,12 +196,29 @@ router.post("/submitPostCmnt", async (req, res) => {
     }
 })
 
+// Delete Comment
 router.post("/deleteCmnt", async (req, res) => {
     try {
         const { commentedBy, commenterName, postId, _id, comment } = req.body;
         const user = await User.findOne({ "posts.postId": postId });
         const allCmntsAfterDeletion = await user.deleteCmnt(commentedBy, commenterName, postId, _id, comment);
         res.status(200).send(allCmntsAfterDeletion);
+
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+// Change Profile Picture
+router.post("/changeProfilepicture", async (req, res) => {
+    try {
+        const { _id, dpLink } = req.body;
+        if (!dpLink) {
+            return res.status(404).json({})
+        }
+        const user = await User.findOne({ _id });
+        const newUserData = await user.changeProfilepicture(dpLink);
+        return res.status(200).send(newUserData);
 
     } catch (err) {
         console.log(err)

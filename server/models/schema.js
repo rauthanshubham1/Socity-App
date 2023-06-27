@@ -265,6 +265,16 @@ userSchema.methods.deleteCmnt = async function (commentedBy, commenterName, post
         console.log(err)
     }
 }
+
+userSchema.methods.changeProfilepicture = async function (dpLink) {
+    try {
+        this.profilePic = dpLink;
+        await this.save();
+        return this;
+    } catch (err) {
+        console.log(err)
+    }
+}
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
