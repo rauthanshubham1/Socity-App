@@ -1,9 +1,9 @@
 .allMsgs {
-  height: auto;
+  height: 600px;
 }
 
 .inbox {
-  border: 2px solid red;
+  border: 2px solid #027ffe;
   max-width: 600px;
   margin: 0 auto;
 }
