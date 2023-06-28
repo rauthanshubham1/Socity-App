@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./LoginPage.css";
 import loginPageImg from "../../assets/loginPageImg.png"
 import LogoNoBg from "../../assets/LogoNoBg.png"
@@ -7,6 +7,33 @@ import { Link, useNavigate } from 'react-router-dom';
 const LoginPage = () => {
     const [userData, setUserData] = useState({ email: "", password: "" })
     const navigate = useNavigate();
+
+    useEffect(() => {
+        verifyUser();
+        document.title = "Socity"
+    }, []);
+
+    const verifyUser = async () => {
+        try {
+            const res = await fetch("/verifyUser", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            let data = await res.json();
+            if (res.status === 200) {
+                navigate("/user/feed");
+            }
+        } catch (err) {
+            console.log(err);
+            navigate("/");
+        }
+    }
+
+
     const handleInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;

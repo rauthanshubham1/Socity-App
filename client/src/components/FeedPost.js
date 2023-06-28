@@ -11,7 +11,6 @@ const FeedPost = ({ postData, userData }) => {
     }, [])
 
     const setPostData = () => {
-
         // For Post Likes
         const likesDataObjArr = postData.likes.filter(obj => obj.likedBy === userData._id);
         // we get new user if liked and if user has unliked it both in array but different isLiked ;
@@ -82,6 +81,7 @@ const FeedPost = ({ postData, userData }) => {
             console.log(err)
         }
     }
+
     const handleSubmitCmnt = async (e) => {
         try {
             e.preventDefault();
@@ -96,7 +96,6 @@ const FeedPost = ({ postData, userData }) => {
                     body: JSON.stringify({ postId: postData.postId, comment: yourCmnt, commentedBy: userData._id, commenterName: userData.name })
                 })
                 const data = await res.json();
-                console.log(data);
                 if (res.status === 200) {
                     setAllCmnts([...allCmnts, { comment: yourCmnt, commentedBy: userData._id, commenterName: userData.name, _id: data.objId }]);
                     setYourCmnt("");
@@ -133,11 +132,11 @@ const FeedPost = ({ postData, userData }) => {
                     ?
                     (postData.likes.length === 0 ?
                         `Liked by You || ${postData.comments.length} Comments`
-                        : `Liked by ${likesData.likes - 1} others and You || ${postData.comments.length} Comments`)
+                        : `Liked by ${likesData.likes - 1} others and You || ${allCmnts.length} Comments`)
                     :
                     (postData.likes.length === 0 ?
                         `${likesData.likes} like || ${postData.comments.length} Comments`
-                        : `Liked by ${likesData.likes} others || ${postData.comments.length} Comments`)
+                        : `Liked by ${likesData.likes} others || ${allCmnts.length} Comments`)
                 }
             </div>
 

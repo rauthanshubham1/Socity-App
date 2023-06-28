@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import MainPage from './Pages/MainPage/MainPage';
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import SignupPage from "./Pages/SignupPage/SignupPage"
@@ -9,13 +9,9 @@ import AllMessages from './components/AllMessages';
 import LogoutPage from './Pages/LogoutPage/LogoutPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import SearchedUser from './Pages/SearchedUser/SearchedUser';
-const isUserVerfied = createContext();
 const App = () => {
 
   return (
-
-    // <isUserVerfied.Provider value={{ verified, userData }}>
-
     <Routes >
       <Route exact path='/' element={<LoginPage />}></Route>
       <Route exact path='/signup' element={<SignupPage />}></Route>
@@ -28,11 +24,6 @@ const App = () => {
       <Route path='/logout' element={<LogoutPage />}></Route>
       <Route path='/*' element={<ErrorPage />}></Route>
     </Routes>
-
-
-    // </isUserVerfied.Provider >
   )
 }
-
 export default App;
-export { isUserVerfied };
