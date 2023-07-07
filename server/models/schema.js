@@ -28,7 +28,6 @@ const userSchema = mongoose.Schema({
             {
                 postId: {
                     type: String,
-                    unique: true,
                 },
                 owner: {
                     type: String,
