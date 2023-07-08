@@ -54,30 +54,36 @@ const Profile = () => {
         }
     }
 
+    const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
+
     const changeDp = async () => {
         try {
             const dpLink = prompt("Enter the link of the image you want as your profile pic");
+            if (urlRegex.test(dpLink)) {
             if (dpLink === "" || !dpLink) { return; }
-            const res = await fetch("/changeProfilepicture", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ _id: user._id, dpLink })
+                const res = await fetch("/changeProfilepicture", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ _id: user._id, dpLink })
 
-            })
-            const data = await res.json();
-            if (res.status === 200) {
-                setUser({
-                    _id: data._id,
-                    name: data.name,
-                    posts: data.posts,
-                    followers: data.followers,
-                    following: data.following,
-                    profilePic: data.profilePic
                 })
+                const data = await res.json();
+                if (res.status === 200) {
+                    setUser({
+                        _id: data._id,
+                        name: data.name,
+                        posts: data.posts,
+                        followers: data.followers,
+                        following: data.following,
+                        profilePic: data.profilePic
+                    })
+                } else {
+                    throw new Error("Try Again");
+                }
             } else {
-                throw new Error("Try Again");
+                alert("Invalid Url")
             }
         } catch (err) {
             console.log(err)

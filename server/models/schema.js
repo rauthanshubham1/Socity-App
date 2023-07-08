@@ -110,7 +110,6 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
     try {
-        console.log(this.posts);
         this.posts.forEach(post => {
             if (!post.postId) {
                 post.postId = Date.now().toString();
@@ -178,12 +177,12 @@ userSchema.methods.toggleFollower = async function (userData, followStatus) {
             // means we want to unfollow
             this.followers = this.followers.filter(obj => (obj.followerId !== (userData._id).toString()))
             await this.save();
-            return false;
+            // return false;
         } else {
             // means we want to follow
             this.followers = [...this.followers, { followerId: userData._id }];
             await this.save();
-            return true;
+            // return true;
         }
     } catch (err) {
         console.log(err);

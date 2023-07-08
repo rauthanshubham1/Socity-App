@@ -31,26 +31,34 @@ const NavBar = ({ userData }) => {
         }
 
     }
+
+    const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
+
     const handleUpload = async (e) => {
         e.preventDefault();
         try {
             const imgSrc = prompt("Enter the image source you want to upload");
-            if (!imgSrc) { return }
-            const res = await fetch("/uploadPost", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ _id: userData._id, imageUrl: imgSrc })
-            });
+            if (urlRegex.test(imgSrc)) {
+                if (!imgSrc) { return }
+                const res = await fetch("/uploadPost", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ _id: userData._id, imageUrl: imgSrc })
+                });
 
-            const data = await res.json();
-            console.log(data);
-            if (res.status === 200) {
-                console.log("Post Uploaded");
+                const data = await res.json();
+                console.log(data);
+                if (res.status === 200) {
+                    console.log("Post Uploaded");
+                    window.location.reload(false);
+                } else {
+                    const error = new Error(res.error)
+                    throw error;
+                }
             } else {
-                const error = new Error(res.error)
-                throw error;
+                alert("Invalid Url");
             }
         } catch (err) {
             console.log(err);
@@ -59,22 +67,22 @@ const NavBar = ({ userData }) => {
 
     return (
         <nav className="navbar">
-            <Link to="feed">
+            <Link to="feed" title='Socity'>
                 <img src={LogoNoBg} alt='' />
             </Link>
             <ul>
                 <li>
-                    <Link to="feed">
+                    <Link to="feed" title='Feed'>
                         <i className="fa-solid fa-house fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
                 <li>
-                    <Link to="profile">
+                    <Link to="profile" title='Profile'>
                         <i className="fa-solid fa-user fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
                 <li>
-                    <Link to="messages">
+                    <Link to="messages" title='Messages'>
                         <i className="fa-solid fa-message fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
@@ -84,17 +92,17 @@ const NavBar = ({ userData }) => {
                     </Link>
                 </li> */}
                 <li>
-                    <Link to="upload" onClick={handleUpload}>
+                    <Link to="upload" onClick={handleUpload} title='Upload Post'>
                         <i className="fa-solid fa-upload fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/search" onClick={handleSearch}>
+                    <Link to="/search" onClick={handleSearch} title='Search User'>
                         <i className="fa-solid fa-magnifying-glass fa-lg" style={{ "color": "#ffffff" }} ></i>
                     </Link>
                 </li>
                 <li>
-                    <Link to="/logout" >
+                    <Link to="/logout" title='Logout'>
                         <i className="fa-solid fa-right-from-bracket fa-lg" style={{ "color": "#ffffff" }}></i>
                     </Link>
                 </li>

@@ -3,7 +3,7 @@ import FeedPost from './FeedPost'
 import "../componentsStyle/Feed.css"
 import Header from "./Header"
 import { useNavigate } from 'react-router-dom'
-
+import defaultFeed from "../assets/defaultFeed.png"
 const Feed = () => {
     const navigate = useNavigate();
     const [feedPosts, setFeedPosts] = useState([])
@@ -70,13 +70,16 @@ const Feed = () => {
         <>
             <Header heading={"Your Feed"}></Header>
             {
-                feedPosts.map(post => {
-                    return (
-                        <div className='feedContainer' key={post.postId}>
-                            <FeedPost postData={post} userData={userData} />
-                        </div>
-                    )
-                })
+                feedPosts.length === 0 ?
+                    <img className="defaultFeedImg" src={defaultFeed} alt="" />
+                    :
+                    feedPosts.map(post => {
+                        return (
+                            <div className='feedContainer' key={post.postId}>
+                                <FeedPost postData={post} userData={userData} />
+                            </div>
+                        )
+                    })
             }
         </>
     )
