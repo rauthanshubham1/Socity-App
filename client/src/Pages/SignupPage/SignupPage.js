@@ -99,8 +99,7 @@ const SignupPage = () => {
                 </form >
 
                 < div className='logIn' >
-                    Have an account ?  & nbsp;
-                    <a href="/">Login</a>
+                    Have an account ?  &nbsp; <a href="/">Login</a>
                 </ div>
 
             </div >
