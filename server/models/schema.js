@@ -110,6 +110,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
     try {
+        console.log(this.posts);
         this.posts.forEach(post => {
             if (!post.postId) {
                 post.postId = Date.now().toString();
