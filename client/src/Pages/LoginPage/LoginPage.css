@@ -42,6 +42,10 @@
   border: 3px solid black;
   padding-left: 10px;
 }
+.formItem h6 {
+  color: red;
+  margin: 0px 0px 10px 2px;
+}
 
 .signUp {
   font-size: 15px;
