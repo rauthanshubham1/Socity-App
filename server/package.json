@@ -4,8 +4,7 @@
   "description": "Socity - A social media app",
   "main": "index.js",
   "scripts": {
-    "dev": "node app.js",
-    "build": "npm i"
+    "dev": "node app.js"
   },
   "keywords": [],
   "author": "",

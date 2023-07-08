@@ -6,6 +6,11 @@ const authentication = require("../middleware/auth")
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
+// For checking connectivity
+router.get("/isLive", (req, res) => { 
+    return res.status(200).send("Backend is Live")
+})
+
 // Login route or homepage route
 router.post("/login", async (req, res) => {
     try {
