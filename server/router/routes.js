@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
 // For checking connectivity
-router.get("/isLive", (req, res) => { 
+router.get("/isLive", (req, res) => {
     return res.status(200).send("Backend is Live")
 })
 
@@ -36,6 +36,7 @@ router.post("/login", async (req, res) => {
         }
     } catch (err) {
         console.log(err);
+        return res.status(500).json({ "error": 'Internal server error' });
     }
 })
 
