@@ -59,8 +59,8 @@ const Profile = () => {
     const changeDp = async () => {
         try {
             const dpLink = prompt("Enter the link of the image you want as your profile pic");
-            if (urlRegex.test(dpLink)) {
             if (dpLink === "" || !dpLink) { return; }
+            if (urlRegex.test(dpLink)) {
                 const res = await fetch("/changeProfilepicture", {
                     method: "POST",
                     headers: {

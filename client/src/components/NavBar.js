@@ -38,8 +38,8 @@ const NavBar = ({ userData }) => {
         e.preventDefault();
         try {
             const imgSrc = prompt("Enter the image source you want to upload");
+            if (!imgSrc) { return }
             if (urlRegex.test(imgSrc)) {
-                if (!imgSrc) { return }
                 const res = await fetch("/uploadPost", {
                     method: "POST",
                     headers: {
