@@ -34,6 +34,7 @@ const FeedPost = ({ postData, userData }) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({ _id: userData._id, postId: postData.postId, isLiked: likesData.isLiked })
             });
             const data = await res.json();
@@ -69,6 +70,7 @@ const FeedPost = ({ postData, userData }) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({ ...cmnt, postId })
             })
             const data = await res.json();
@@ -93,6 +95,7 @@ const FeedPost = ({ postData, userData }) => {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify({ postId: postData.postId, comment: yourCmnt, commentedBy: userData._id, commenterName: userData.name })
                 })
                 const data = await res.json();

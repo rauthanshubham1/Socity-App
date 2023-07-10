@@ -15,7 +15,6 @@ router.get("/isLive", (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password);
         if (!email || !password) {
             return res.status(422).json({ "error": "Please fill all the form fields" });
         }
@@ -36,7 +35,6 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ "error": "User not exist" });
         }
     } catch (err) {
-        console.log(9);
         console.log(err);
     }
 })

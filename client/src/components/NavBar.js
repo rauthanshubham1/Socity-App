@@ -16,6 +16,7 @@ const NavBar = ({ userData }) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({ email: userEmail })
             });
             const data = await res.json();
@@ -45,6 +46,7 @@ const NavBar = ({ userData }) => {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify({ _id: userData._id, imageUrl: imgSrc })
                 });
 

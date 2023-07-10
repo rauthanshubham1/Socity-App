@@ -66,6 +66,7 @@ const Profile = () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify({ _id: user._id, dpLink })
 
                 })

@@ -53,11 +53,10 @@ const LoginPage = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({ email, password })
             })
-            console.log(res);
             const data = await res.json();
-            console.log(data);
             if (res.status === 200) {
                 window.alert(data.message);
                 navigate("/user/feed");
