@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+app.use(cors({ credentials: true, origin: true }));
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" })
 require("./db/connect");
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(require("./router/routes"));
 

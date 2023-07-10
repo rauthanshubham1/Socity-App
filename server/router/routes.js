@@ -17,30 +17,22 @@ router.post("/login", async (req, res) => {
         const { email, password } = req.body;
         console.log(email, password);
         if (!email || !password) {
-            console.log(1);
             return res.status(422).json({ "error": "Please fill all the form fields" });
         }
-        console.log(2);
         const existUser = await User.findOne({ email });
         if (existUser) {
-            console.log(3);
             const checkPassword = await bcrypt.compare(password, existUser.password);
-            console.log(4);
             if (checkPassword) {
-                console.log(5);
                 const token = await existUser.generateToken();
                 res.cookie("sessionTkn", token, {
                     expires: new Date(Date.now() + 86400000),
                     httpOnly: true
                 });
-                console.log(6);
                 return res.status(200).json({ "message": "Login successful" });
             } else {
-                console.log(7);
                 return res.status(401).json({ "error": "Invalid credentials " });
             }
         } else {
-            console.log(8);
             return res.status(401).json({ "error": "User not exist" });
         }
     } catch (err) {

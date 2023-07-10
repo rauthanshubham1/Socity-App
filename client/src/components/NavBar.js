@@ -11,7 +11,7 @@ const NavBar = ({ userData }) => {
         try {
             const userEmail = prompt("Enter the email of the person you want to search");
             if (!userEmail) { return }
-            const res = await fetch("/searchUser", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/searchUser`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ const NavBar = ({ userData }) => {
             const imgSrc = prompt("Enter the image source you want to upload");
             if (!imgSrc) { return }
             if (urlRegex.test(imgSrc)) {
-                const res = await fetch("/uploadPost", {
+                const res = await fetch(`${process.env.REACT_APP_ROUTE}/uploadPost`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

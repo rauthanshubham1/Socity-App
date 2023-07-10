@@ -16,7 +16,7 @@ const MainPage = () => {
 
     const verifyUser = async () => {
         try {
-            const res = await fetch("/verifyUser", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -40,7 +40,7 @@ const MainPage = () => {
 
     const suggestAccount = async () => {
         try {
-            const res = await fetch("/suggestUsers", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/suggestUsers`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

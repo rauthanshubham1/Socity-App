@@ -16,7 +16,7 @@ const SearchedUser = () => {
 
     const checkFollowStatus = async () => {
         try {
-            const res = await fetch("/checkFollowStatus", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -43,7 +43,7 @@ const SearchedUser = () => {
 
     const handleFollowBtn = async (searchedUserData) => {
         try {
-            const res = await fetch("/checkFollowStatus", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",

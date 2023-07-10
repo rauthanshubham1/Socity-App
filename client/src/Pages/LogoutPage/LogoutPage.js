@@ -10,7 +10,7 @@ const LogoutPage = () => {
 
     const logoutUser = async (e) => {
         try {
-            const res = await fetch("/logout", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/logout`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

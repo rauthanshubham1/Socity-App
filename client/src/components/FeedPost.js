@@ -29,7 +29,7 @@ const FeedPost = ({ postData, userData }) => {
 
     const handleLikeBtn = async () => {
         try {
-            const res = await fetch("/feedPostLike", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/feedPostLike`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -64,7 +64,7 @@ const FeedPost = ({ postData, userData }) => {
     const handleDeleteCmnt = async (cmnt, postId) => {
         try {
             // console.log(cmnt)
-            const res = await fetch("/deleteCmnt", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/deleteCmnt`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -88,7 +88,7 @@ const FeedPost = ({ postData, userData }) => {
             if (yourCmnt === "" || !yourCmnt) {
                 return;
             } else {
-                const res = await fetch("/submitPostCmnt", {
+                const res = await fetch(`${process.env.REACT_APP_ROUTE}/submitPostCmnt`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

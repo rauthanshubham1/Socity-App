@@ -20,7 +20,7 @@ const Profile = () => {
 
     const verifyUser = async () => {
         try {
-            const res = await fetch("/verifyUser", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -61,7 +61,7 @@ const Profile = () => {
             const dpLink = prompt("Enter the link of the image you want as your profile pic");
             if (dpLink === "" || !dpLink) { return; }
             if (urlRegex.test(dpLink)) {
-                const res = await fetch("/changeProfilepicture", {
+                const res = await fetch(`${process.env.REACT_APP_ROUTE}/changeProfilepicture`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

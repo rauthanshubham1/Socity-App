@@ -17,7 +17,7 @@ const Feed = () => {
 
     const verifyUser = async () => {
         try {
-            const res = await fetch("/verifyUser", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -43,7 +43,7 @@ const Feed = () => {
 
     const getFeedPosts = async () => {
         try {
-            const res = await fetch("/getFeedPosts", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/getFeedPosts`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

@@ -26,7 +26,7 @@ const SignupPage = () => {
 
     const verifyUser = async () => {
         try {
-            const res = await fetch("/verifyUser", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -47,7 +47,7 @@ const SignupPage = () => {
     const submitForm = async () => {
         try {
             const { name, email, phone, password } = values;
-            const res = await fetch("/signup", {
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
