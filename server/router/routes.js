@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
                     expires: new Date(Date.now() + 86400000),
                     httpOnly: true
                 });
-                return res.status(200).json({ "message": "Login successful" });
+                return res.status(200).json({ "message": "Login successful", "sessionTkn": token });
             } else {
                 return res.status(401).json({ "error": "Invalid credentials " });
             }

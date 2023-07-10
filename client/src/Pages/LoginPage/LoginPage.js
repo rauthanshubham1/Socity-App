@@ -5,10 +5,11 @@ import LogoNoBg from "../../assets/LogoNoBg.png"
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from "../../formValidation/loginValidation"
+import { useCookies } from 'react-cookie';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-
+    const [cookies, setCookie] = useCookies(['sessionTkn']);
     useEffect(() => {
         verifyUser();
         document.title = "Socity"
@@ -58,6 +59,11 @@ const LoginPage = () => {
             })
             const data = await res.json();
             if (res.status === 200) {
+                const token = data.sessionTkn;
+                setCookie('sessionTkn', token, {
+                    expires: new Date(Date.now() + 86400000),
+                    path: '/'
+                });
                 window.alert(data.message);
                 navigate("/user/feed");
             } else {
