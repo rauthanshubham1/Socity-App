@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import "./SignupPage.css"
 import LogoNoBg from "../../assets/LogoNoBg.png"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from 'formik';
 import { signupSchema } from "../../formValidation/signupValidation"
 
@@ -100,7 +100,7 @@ const SignupPage = () => {
                 </form >
 
                 < div className='logIn' >
-                    Have an account ?  &nbsp; <a href="/">Login</a>
+                    Have an account ?  &nbsp; <Link to="/">Login</Link>
                 </ div>
 
             </div >
