@@ -10,6 +10,8 @@ const LogoutPage = () => {
 
     const logoutUser = async (e) => {
         try {
+            const expires = new Date(Date.now() + 500);
+            document.cookie = `sessionTkn=;path=/;expires=${expires}`
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/logout`, {
                 method: "GET",
                 headers: {

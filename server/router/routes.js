@@ -233,7 +233,7 @@ router.post("/changeProfilepicture", async (req, res) => {
 // Logout User
 router.get("/logout", async (req, res) => {
     try {
-        res.clearCookie("sessionTkn", { path: "/" });
+        // res.clearCookie("sessionTkn", { path: "/" });
         res.status(200).json({ "message": "User Logged Out" });
     } catch (error) {
         console.log(err);

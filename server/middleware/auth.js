@@ -5,7 +5,6 @@ const authentication = async (req, res, next) => {
     try {
         // const token = req.cookies.sessionTkn;
         const { sessionTkn } = req.body;
-        console.log(req.body);
         const verifyUser = jwt.verify(sessionTkn, process.env.SECRETKEY);
         const rootUser = await User.findOne({ _id: verifyUser._id, "tokens.token": sessionTkn })
         if (!rootUser) {
