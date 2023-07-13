@@ -23,10 +23,10 @@ router.post("/login", async (req, res) => {
             const checkPassword = await bcrypt.compare(password, existUser.password);
             if (checkPassword) {
                 const token = await existUser.generateToken();
-                res.cookie("sessionTkn", token, {
-                    expires: new Date(Date.now() + 86400000),
-                    httpOnly: true
-                });
+                // res.cookie("sessionTkn", token, {
+                //     expires: new Date(Date.now() + 86400000),
+                //     httpOnly: true
+                // });
                 return res.status(200).json({ "message": "Login successful", "sessionTkn": token });
             } else {
                 return res.status(401).json({ "error": "Invalid credentials " });
@@ -80,7 +80,7 @@ router.get("/getFeedPosts", authentication, async (req, res) => {
 })
 
 // Verify User
-router.get('/verifyUser', authentication, (req, res) => {
+router.post('/verifyUser', authentication, (req, res) => {
     res.status(200).send(req.userData);
 });
 

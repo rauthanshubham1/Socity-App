@@ -4,6 +4,7 @@ import "../componentsStyle/Feed.css"
 import Header from "./Header"
 import { useNavigate } from 'react-router-dom'
 import defaultFeed from "../assets/defaultFeed.png"
+
 const Feed = () => {
     const navigate = useNavigate();
     const [feedPosts, setFeedPosts] = useState([])
@@ -17,13 +18,15 @@ const Feed = () => {
 
     const verifyUser = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify({ sessionTkn })
             });
 
             const data = await res.json();

@@ -26,13 +26,15 @@ const SignupPage = () => {
 
     const verifyUser = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify({ sessionTkn })
             });
             let data = await res.json();
             if (res.status === 200) {

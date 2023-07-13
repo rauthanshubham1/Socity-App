@@ -5,11 +5,9 @@ import LogoNoBg from "../../assets/LogoNoBg.png"
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from "../../formValidation/loginValidation"
-import { useCookies } from 'react-cookie';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['sessionTkn']);
     useEffect(() => {
         verifyUser();
         document.title = "Socity"
@@ -28,13 +26,15 @@ const LoginPage = () => {
 
     const verifyUser = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify({ sessionTkn })
             });
             let data = await res.json();
             if (res.status === 200) {
@@ -59,11 +59,13 @@ const LoginPage = () => {
             })
             const data = await res.json();
             if (res.status === 200) {
-                const token = data.sessionTkn;
-                setCookie('sessionTkn', token, {
-                    expires: new Date(Date.now() + 86400000),
-                    path: '/'
-                });
+                const sessionTkn = data.sessionTkn;
+                const expires = new Date(Date.now() + 86400000);
+                document.cookie = `sessionTkn=${sessionTkn};path=/;expires=${expires}`
+                // setCookie('sessionTkn', token, {
+                //     expires: new Date(Date.now() + 86400000),
+                //     path: '/'
+                // });
                 window.alert(data.message);
                 navigate("/user/feed");
             } else {
