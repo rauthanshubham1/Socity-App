@@ -65,7 +65,7 @@ router.post("/signup", async (req, res) => {
 })
 
 // Feed post
-router.get("/getFeedPosts", authentication, async (req, res) => {
+router.post("/getFeedPosts", authentication, async (req, res) => {
     try {
         const userFollowing = req.userData.following;
         const tempArr = [];
@@ -163,7 +163,7 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
 
 
 // Suggest account
-router.get("/suggestUsers", authentication, async (req, res) => {
+router.post("/suggestUsers", authentication, async (req, res) => {
     try {
         const userData = req.userData;
         const tempArr1 = [...userData.following]

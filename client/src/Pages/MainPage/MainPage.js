@@ -42,13 +42,15 @@ const MainPage = () => {
 
     const suggestAccount = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/suggestUsers`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify({ sessionTkn })
             });
             const data = await res.json();
             if (res.status === 200) {

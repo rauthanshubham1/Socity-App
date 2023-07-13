@@ -46,13 +46,15 @@ const Feed = () => {
 
     const getFeedPosts = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/getFeedPosts`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
                 },
-                credentials: "include"
+                credentials: "include",
+                body: JSON.stringify({ sessionTkn })
             });
 
             let data = await res.json();
