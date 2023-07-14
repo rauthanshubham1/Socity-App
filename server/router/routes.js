@@ -132,16 +132,15 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
             const result = newUserData.following.find(user => user.followingId === searchedUserData._id);
             if (!result) {
                 // Searched user is not followed
-                return res.status(404).send({ newSearchedUser });
+                return res.status(200).send({ newSearchedUser, isFollowed: false });
             } else {
                 // Searched user is followed
-                return res.status(200).send({ newSearchedUser });
+                return res.status(200).send({ newSearchedUser, isFollowed: true });
             }
         } else {
             // Follow button on clicking will use this
             if (followStatus) {
                 // It means following so it will make it unfollow
-                console.log(1);
                 await userData.toggleFollowing(searchedUserData, followStatus);
                 const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });
                 await newSearchedUserData.toggleFollower(userData, followStatus);
@@ -149,7 +148,6 @@ router.post("/checkFollowStatus", authentication, async (req, res) => {
                 res.status(200).send(sendSearchedUserData);
             }
             else {
-                console.log(1);
                 // It means not following so it will make it follow
                 await userData.toggleFollowing(searchedUserData, followStatus);
                 const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });

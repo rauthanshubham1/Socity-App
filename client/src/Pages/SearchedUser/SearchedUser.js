@@ -27,14 +27,11 @@ const SearchedUser = () => {
                 body: JSON.stringify({ searchedUserData: searchedUserData, sessionTkn: sessionTkn, event: "Page Load" })
             })
             let data = await res.json();
+            console.log(data);
             data.newSearchedUser.posts = data.newSearchedUser.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
 
             if (res.status === 200) {
-                setIsFollowed(true);
-                setNewSearchedUserData(data.newSearchedUser);
-
-            } else {
-                setIsFollowed(false);
+                setIsFollowed(data.isFollowed);
                 setNewSearchedUserData(data.newSearchedUser);
             }
         } catch (err) {
