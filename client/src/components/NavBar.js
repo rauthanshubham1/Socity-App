@@ -24,7 +24,8 @@ const NavBar = ({ userData }) => {
                 console.log("User found");
                 navigate("/searchedUser", { state: data });
             } else {
-                const error = new Error(res.error)
+                alert("User doesn't exist");
+                const error = new Error(data.error)
                 throw error;
             }
         } catch (err) {

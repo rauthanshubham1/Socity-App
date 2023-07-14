@@ -16,6 +16,7 @@ const SearchedUser = () => {
 
     const checkFollowStatus = async () => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
@@ -23,7 +24,7 @@ const SearchedUser = () => {
                     "Content-Type": "application/json"
                 },
                 credentials: "include",
-                body: JSON.stringify(searchedUserData)
+                body: JSON.stringify({ searchedUserData: searchedUserData, sessionTkn: sessionTkn, event: "Page Load" })
             })
             let data = await res.json();
             data.newSearchedUser.posts = data.newSearchedUser.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
@@ -43,6 +44,7 @@ const SearchedUser = () => {
 
     const handleFollowBtn = async (searchedUserData) => {
         try {
+            const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
@@ -50,7 +52,7 @@ const SearchedUser = () => {
                     "Content-Type": "application/json"
                 },
                 credentials: "include",
-                body: JSON.stringify({ ...searchedUserData, event: "Button Clicked", followStatus: isFollowed })
+                body: JSON.stringify({ searchedUserData: searchedUserData, event: "Button Clicked", followStatus: isFollowed, sessionTkn: sessionTkn })
             })
             const data = await res.json();
             checkFollowStatus();

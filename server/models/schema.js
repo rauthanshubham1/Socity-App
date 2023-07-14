@@ -157,12 +157,12 @@ userSchema.methods.generateToken = async function () {
 userSchema.methods.toggleFollowing = async function (searchedUserData, followStatus) {
     try {
         if (followStatus) {
-            // means we want to unfollow
+            // Means to Unfollow
             this.following = this.following.filter(obj => { return (obj.followingId !== searchedUserData._id) })
             await this.save();
             return false;
         } else {
-            // means we want to follow
+            // Means to Follow
             this.following = [...this.following, { followingId: searchedUserData._id }];
             await this.save();
             return true;

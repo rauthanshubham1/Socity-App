@@ -111,7 +111,7 @@ router.post("/searchUser", async (req, res) => {
         if (user) {
             return res.status(200).send(user)
         } else {
-            return res.status(400).json({ "error": "User doesn't exist" })
+            return res.status(400).json({ "Error": "User doesn't exist" })
         }
     } catch (err) {
         console.log(err);
@@ -122,36 +122,38 @@ router.post("/searchUser", async (req, res) => {
 router.post("/checkFollowStatus", authentication, async (req, res) => {
     try {
         const userData = req.userData;
-        const searchedUserData = req.body;
-        if (!searchedUserData.event) {
+        const { searchedUserData, event, followStatus } = req.body;
+        if (event === "Page Load") {
             // Use Effect will use this
-            //  check if follow or not
+            //  Check if followed or not
             const newUserData = await User.findOne({ _id: (userData._id).toString() });
-            //  give searched user followers count
+            //  Gives searched user info
             const newSearchedUser = await User.findOne({ _id: (searchedUserData._id) });
             const result = newUserData.following.find(user => user.followingId === searchedUserData._id);
             if (!result) {
-                // Unfollow hai searched user
-                return res.status(404).send({ newUserData, newSearchedUser });
+                // Searched user is not followed
+                return res.status(404).send({ newSearchedUser });
             } else {
-                // Follow
-                return res.status(200).send({ newUserData, newSearchedUser });
+                // Searched user is followed
+                return res.status(200).send({ newSearchedUser });
             }
         } else {
-            // onclick will use this
-            if (searchedUserData.followStatus) {
-                // IT means following so make it unfollow
-                await userData.toggleFollowing(searchedUserData, searchedUserData.followStatus);
+            // Follow button on clicking will use this
+            if (followStatus) {
+                // It means following so it will make it unfollow
+                console.log(1);
+                await userData.toggleFollowing(searchedUserData, followStatus);
                 const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });
-                await newSearchedUserData.toggleFollower(userData, searchedUserData.followStatus);
+                await newSearchedUserData.toggleFollower(userData, followStatus);
                 const sendSearchedUserData = await User.findOne({ _id: searchedUserData._id });
                 res.status(200).send(sendSearchedUserData);
             }
             else {
-                // IT means not following so make it follow
-                await userData.toggleFollowing(searchedUserData, searchedUserData.followStatus);
+                console.log(1);
+                // It means not following so it will make it follow
+                await userData.toggleFollowing(searchedUserData, followStatus);
                 const newSearchedUserData = await User.findOne({ _id: searchedUserData._id });
-                await newSearchedUserData.toggleFollower(userData, searchedUserData.followStatus);
+                await newSearchedUserData.toggleFollower(userData, followStatus);
                 const sendSearchedUserData = await User.findOne({ _id: searchedUserData._id });
                 res.status(200).send(sendSearchedUserData);
             }
