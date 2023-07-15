@@ -5,6 +5,7 @@ import LogoNoBg from "../../assets/LogoNoBg.png"
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from "../../formValidation/loginValidation"
+import Loading from "../../assets/Loading.gif"
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -48,6 +49,7 @@ const LoginPage = () => {
 
     const submitForm = async () => {
         try {
+            document.querySelector(".loadingContainer").style.display = "flex";
             const { email, password } = values;
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/login`, {
                 method: "POST",
@@ -58,14 +60,11 @@ const LoginPage = () => {
                 body: JSON.stringify({ email, password })
             })
             const data = await res.json();
+            document.querySelector(".loadingContainer").style.display = "none";
             if (res.status === 200) {
                 const sessionTkn = data.sessionTkn;
                 const expires = new Date(Date.now() + 86400000);
                 document.cookie = `sessionTkn=${sessionTkn};path=/;expires=${expires}`
-                // setCookie('sessionTkn', token, {
-                //     expires: new Date(Date.now() + 86400000),
-                //     path: '/'
-                // });
                 window.alert(data.message);
                 navigate("/user/feed");
             } else {
@@ -79,12 +78,13 @@ const LoginPage = () => {
 
     return (
         <>
+            <div className='loadingContainer'>
+                <img src={Loading} alt="" className='loading' />
+            </div>
             <div className='loginPageContainer'>
-
                 <div className='phoneImageContainer'>
                     <img src={loginPageImg} alt="Not available" />
                 </div>
-
                 <div className='loginFormContainer'>
                     <img src={LogoNoBg} alt="Logo not available" />
                     <form method='post' className='formStyling' onSubmit={handleSubmit}>
@@ -105,8 +105,6 @@ const LoginPage = () => {
                         Don't have an account? &nbsp; <Link to="/signup">Sign up</Link>
                     </div>
                 </div >
-
-
             </div >
         </>
     )

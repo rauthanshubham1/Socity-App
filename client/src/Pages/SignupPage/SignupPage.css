@@ -1,3 +1,12 @@
+.loadingContainer {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.loadingContainer img {
+  height: 50px;
+}
+
 .signupFormContainer {
   border: 2px solid #949494;
   margin-right: 500px;

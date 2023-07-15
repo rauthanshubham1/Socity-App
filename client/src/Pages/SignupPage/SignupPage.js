@@ -4,6 +4,7 @@ import LogoNoBg from "../../assets/LogoNoBg.png"
 import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from 'formik';
 import { signupSchema } from "../../formValidation/signupValidation"
+import Loading from "../../assets/Loading.gif"
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -48,6 +49,7 @@ const SignupPage = () => {
 
     const submitForm = async () => {
         try {
+            document.querySelector(".loadingContainer").style.display = "flex";
             const { name, email, phone, password } = values;
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/signup`, {
                 method: "POST",
@@ -58,10 +60,12 @@ const SignupPage = () => {
                 body: JSON.stringify({ name, email, phone, password })
             })
             const data = await res.json();
+            document.querySelector(".loadingContainer").style.display = "none";
             if (res.status === 201) {
                 window.alert(data.message);
                 navigate("/")
             } else {
+                document.querySelector(".loadingContainer").style.display = "none";
                 window.alert(data.error);
                 resetForm();
             }
@@ -72,6 +76,9 @@ const SignupPage = () => {
 
     return (
         <>
+            <div className='loadingContainer'>
+                <img src={Loading} alt="" className='loading' />
+            </div>
             <div className='signupFormContainer'>
                 <img src={LogoNoBg} alt="Logo not available" />
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../componentsStyle/Profile.css"
 import Header from "./Header"
 import { useNavigate } from "react-router-dom"
+import Loading from "../assets/Loading.gif"
 
 const Profile = () => {
     const [user, setUser] = useState({
@@ -20,6 +21,7 @@ const Profile = () => {
 
     const verifyUser = async () => {
         try {
+            document.querySelector(".loadingContainer1").style.display = "flex";
             const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
@@ -32,6 +34,7 @@ const Profile = () => {
             });
 
             let data = await res.json();
+            document.querySelector(".loadingContainer1").style.display = "none";
             data.posts = data.posts.sort((a, b) => Number(b.postId) - Number(a.postId));
             if (res.status === 200) {
                 setUser({
@@ -63,6 +66,7 @@ const Profile = () => {
             const dpLink = prompt("Enter the link of the image you want as your profile pic");
             if (dpLink === "" || !dpLink) { return; }
             if (urlRegex.test(dpLink)) {
+                document.querySelector(".loadingContainer").style.display = "flex";
                 const res = await fetch(`${process.env.REACT_APP_ROUTE}/changeProfilepicture`, {
                     method: "POST",
                     headers: {
@@ -73,6 +77,7 @@ const Profile = () => {
 
                 })
                 const data = await res.json();
+                document.querySelector(".loadingContainer").style.display = "none";
                 if (res.status === 200) {
                     setUser({
                         _id: data._id,
@@ -96,6 +101,9 @@ const Profile = () => {
     return (
         <>
             <Header heading="Your Profile" />
+            <div className='loadingContainer1'>
+                <img src={Loading} alt="" className='loading' />
+            </div>
             <div className='profileContainer'>
                 <div className='profileDetails'>
                     <div className='profileImg'>

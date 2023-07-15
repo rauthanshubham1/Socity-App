@@ -52,9 +52,8 @@ const NavBar = ({ userData }) => {
                 });
 
                 const data = await res.json();
-                console.log(data);
                 if (res.status === 200) {
-                    console.log("Post Uploaded");
+                    alert("Post Uploaded");
                     window.location.reload(false);
                 } else {
                     const error = new Error(res.error)

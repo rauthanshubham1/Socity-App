@@ -4,6 +4,7 @@ import "../componentsStyle/Feed.css"
 import Header from "./Header"
 import { useNavigate } from 'react-router-dom'
 import defaultFeed from "../assets/defaultFeed.png"
+import Loading from "../assets/Loading.gif"
 
 const Feed = () => {
     const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Feed = () => {
 
     const getFeedPosts = async () => {
         try {
+            document.querySelector(".loadingContainer").style.display = "flex";
             const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/getFeedPosts`, {
                 method: "POST",
@@ -58,14 +60,14 @@ const Feed = () => {
             });
 
             let data = await res.json();
+            document.querySelector(".loadingContainer").style.display = "none";
             data = data.sort((a, b) => b.postId - a.postId);
-            if (res.status !== 200) {
+            if (res.status === 200) {
+                setFeedPosts(data);
+            } else {
                 const error = new Error(res.error)
                 throw error;
-            } else {
-                setFeedPosts(data);
             }
-
         } catch (err) {
             console.log(err);
         }
@@ -74,6 +76,9 @@ const Feed = () => {
     return (
         <>
             <Header heading={"Your Feed"}></Header>
+            <div className='loadingContainer'>
+                <img src={Loading} alt="" className='loading' />
+            </div>
             {
                 feedPosts.length === 0 ?
                     <img className="defaultFeedImg" src={defaultFeed} alt="" />

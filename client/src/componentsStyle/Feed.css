@@ -1,9 +1,18 @@
+.loadingContainer {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.loadingContainer img {
+  height: 50px;
+}
+
 .feedContainer {
   /* border: 2px solid rgb(130, 122, 122); */
   border-radius: 20px;
   margin-bottom: 40px;
 }
 
-.defaultFeedImg{
-height: 500px;
+.defaultFeedImg {
+  height: 500px;
 }

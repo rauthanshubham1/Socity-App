@@ -1,3 +1,12 @@
+.loadingContainer {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.loadingContainer img {
+  height: 50px;
+}
+
 .loginPageContainer {
   margin-left: 250px;
   margin-right: 250px;

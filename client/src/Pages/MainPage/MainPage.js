@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom"
 import "./MainPage.css"
 import AccSuggestion from '../../components/AccSuggestion'
 import Header from '../../components/Header'
+import Loading from "../../assets/Loading.gif"
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -42,6 +43,7 @@ const MainPage = () => {
 
     const suggestAccount = async () => {
         try {
+            document.querySelector(".loadingContainer").style.display = "flex";
             const sessionTkn = (document.cookie).split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/suggestUsers`, {
                 method: "POST",
@@ -53,9 +55,11 @@ const MainPage = () => {
                 body: JSON.stringify({ sessionTkn })
             });
             const data = await res.json();
+            document.querySelector(".loadingContainer").style.display = "none";
             if (res.status === 200) {
                 setSuggestedUsers(data);
             } else {
+                document.querySelector(".loadingContainer").style.display = "none";
                 const error = new Error(res.error)
                 throw error;
             }
@@ -72,6 +76,9 @@ const MainPage = () => {
             <div className='lowerContainer'>
                 <div className='suggestions'>
                     <Header heading="Suggested for you" />
+                    <div className='loadingContainer'>
+                        <img src={Loading} alt="" className='loading' />
+                    </div>
                     {
                         suggestedUsers.map(user => {
                             return <AccSuggestion searchedUserData={user} key={user._id} />
