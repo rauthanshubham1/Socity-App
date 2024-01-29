@@ -5,8 +5,9 @@ const bcrypt = require("bcrypt");
 const authentication = require("../middleware/auth")
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
+const GlobalChats = require("../models/globalChatsSchema");
 
-// For checking connectivity
+// For checking connectivity in production
 router.get("/isLive", (req, res) => {
     return res.status(200).send("Backend is Live")
 })
@@ -38,7 +39,6 @@ router.post("/login", async (req, res) => {
         console.log(err);
     }
 })
-
 
 // Signup route
 router.post("/signup", async (req, res) => {
@@ -81,9 +81,8 @@ router.post("/getFeedPosts", authentication, async (req, res) => {
 
 // Verify User
 router.post('/verifyUser', authentication, (req, res) => {
-    res.status(200).send(req.userData);
+    res.status(200).send({ userData: req.userData });
 });
-
 
 // Upload Post
 router.post("/uploadPost", async (req, res) => {
@@ -230,6 +229,46 @@ router.post("/changeProfilepicture", async (req, res) => {
     }
 })
 
+// Global chats
+router.post("/getGlobalChats", authentication, async (req, res) => {
+    try {
+        const allGlobalChats = await GlobalChats.find();
+        const userData = req.userData;
+        return res.status(200).send({ allGlobalChats, userData });
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+router.post("/addNewGlobalChats", authentication, async (req, res) => {
+    try {
+        const { globalChatName } = req.body;
+        if (!globalChatName) {
+            return res.status(400).json({ "error": "Invalid global chat name" });
+        } else {
+            const userID = req.userID;
+            const roomId = Date.now();
+            const userData = req.userData;
+            const newChat = new GlobalChats({ globalChatsName: globalChatName, roomId, createdBy: userID, messages: [], authorName: userData.name })
+            await newChat.save();
+            res.status(200).send(newChat);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+router.post("/getGlobalChatMessages", async (req, res) => {
+    try {
+        const { roomId } = req.body;
+        const globalChat = await GlobalChats.findOne({ roomId });
+        const allMessages = globalChat.messages;
+        return res.status(200).send({ allMessages });
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 // Logout User
 router.get("/logout", async (req, res) => {
     try {
@@ -239,4 +278,5 @@ router.get("/logout", async (req, res) => {
         console.log(err);
     }
 })
+
 module.exports = router;

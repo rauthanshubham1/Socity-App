@@ -9,6 +9,7 @@ import AllMessages from './components/AllMessages';
 import LogoutPage from './Pages/LogoutPage/LogoutPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import SearchedUser from './Pages/SearchedUser/SearchedUser';
+import Chats from './components/Chats';
 const App = () => {
 
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route index path='feed' element={<Feed />}></Route>
         <Route path='profile' element={<Profile />}></Route>
         <Route path='messages' element={<AllMessages />}></Route>
+        <Route path='chats' element={<Chats />}></Route>
       </Route >
       <Route path='/logout' element={<LogoutPage />}></Route>
       <Route path='/*' element={<ErrorPage />}></Route>

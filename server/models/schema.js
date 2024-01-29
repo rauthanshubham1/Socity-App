@@ -271,9 +271,10 @@ userSchema.methods.changeProfilepicture = async function (dpLink) {
         await this.save();
         return this;
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

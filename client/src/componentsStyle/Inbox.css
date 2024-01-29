@@ -1,20 +1,33 @@
-.message {
-  border: 2px solid #027ffe;
+.parentMsgContainer {
+  border: 2px solid black;
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+.parentMsgContainer:hover {
+  cursor: pointer;
+  border: 2px solid whitesmoke;
+}
+
+.infoContainer {
+  display: flex;
+  align-items: center;
+  width: 40%;
+}
+
+.messageContainer {
+  padding-left: 5px;
+  width: 60%;
+}
+
+.avatar {
+  width: 20%;
+  text-align: center;
 }
 
 .avatar img {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-}
-
-.content {
-  margin-left: 10px;
-}
-
-h3 {
-  margin: 0;
 }

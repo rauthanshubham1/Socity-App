@@ -16,9 +16,9 @@
 }
 
 .profileDetails {
+  border: 3px solid black;
   display: flex;
   height: 200px;
-  border: 3px solid #047efd;
 }
 
 .profileImg {
@@ -36,7 +36,7 @@
   object-fit: contain;
 }
 .accountData {
-  border-left: 3px solid #047efd;
+  border-left: 3px solid black;
   width: 70%;
   height: 100%;
   display: flex;

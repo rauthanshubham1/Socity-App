@@ -1,20 +1,56 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from "./Header"
 import Inbox from "./Inbox"
 import "../componentsStyle/AllMessages.css"
 import { useNavigate } from "react-router-dom"
 
+
 const AllMessages = () => {
     const navigate = useNavigate();
+    const [globalChatName, setGlobalChatName] = useState("");
+    const [globalChats, setGlobalChats] = useState([]);
+    const [userData, setUserData] = useState({});
+
     useEffect(() => {
-        verifyUser();
+        showGlobalChats();
         document.title = "Socity - Messages";
     }, [])
 
-    const verifyUser = async () => {
+    const setGlobalChatArea = (e) => {
+        const value = e.target.value;
+        setGlobalChatName(value);
+    }
+
+    const createGlobalChat = async (e) => {
         try {
-            const sessionTkn = (document.cookie).split("=")[1];
-            const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
+            e.preventDefault();
+            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/addNewGlobalChats`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ globalChatName, sessionTkn })
+            })
+
+            const data = await res.json();
+            if (res.status === 200) {
+                setGlobalChats([...globalChats, data])
+                setGlobalChatName("");
+            } else {
+                throw new Error("Cannot create new global chat");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const showGlobalChats = async () => {
+        try {
+            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const res = await fetch(`${process.env.REACT_APP_ROUTE}/getGlobalChats`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -24,8 +60,11 @@ const AllMessages = () => {
                 body: JSON.stringify({ sessionTkn })
             });
             const data = await res.json();
+            
             if (res.status === 200) {
-                navigate("/user/messages")
+                setGlobalChats(data.allGlobalChats);
+                setUserData(data.userData);
+                navigate("/user/messages");
             } else {
                 const error = new Error(res.error)
                 throw error;
@@ -38,15 +77,29 @@ const AllMessages = () => {
 
     return (
         <div className='allMsgs'>
-            <Header heading="Your Messages" />
+            <Header heading="Global Chats" />
+            <form className='formStyling'>
+                <div className='formItem'>
+                    <input type="text" placeholder='Enter name of new global chat' name="email" value={globalChatName} autoComplete='off' onChange={setGlobalChatArea} />
+                    <button className="button-3" type='submit' onClick={createGlobalChat}>Create new global chat</button>
+                </div>
+            </form>
+
             <div className="inbox">
-                <Inbox name={"User1"} url={"https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"} />
-                <Inbox name={"User2"} url={"https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png"} />
-                <Inbox name={"User3"} url={"https://w7.pngwing.com/pngs/490/157/png-transparent-male-avatar-boy-face-man-user-flat-classy-users-icon.png"} />
-                <Inbox name={"User4"} url={"https://www.shareicon.net/data/512x512/2016/05/24/770137_man_512x512.png"} />
-                <Inbox name={"User5"} url={"https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"} />
-                <Inbox name={"User6"} url={"https://cdn.icon-icons.com/icons2/2468/PNG/512/user_kids_avatar_user_profile_icon_149314.png"} />
+
+                {
+
+                    globalChats.slice(0).reverse().map(
+                        (chat, index) => {
+                            return (
+                                <Inbox key={index} name={chat.globalChatsName} url={"https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"} roomId={chat.roomId} authorName={chat.authorName} totalMsg={chat.messages} globalChatsName={chat.globalChatsName} user_name={userData.name} />
+                            )
+                        }
+                    )
+                }
+
             </div>
+
         </div>
 
     )
