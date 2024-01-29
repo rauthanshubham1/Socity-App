@@ -49,7 +49,7 @@
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(3, 250px);
-  grid-template-rows: repeat(3, 250px);
+  grid-template-rows: repeat(1, 250px);
   /* border: 2px solid red; */
   justify-content: center;
   grid-auto-rows: 250px;

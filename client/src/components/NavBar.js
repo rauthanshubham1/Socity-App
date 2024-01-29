@@ -48,7 +48,7 @@ const NavBar = ({ userData }) => {
                         "Content-Type": "application/json"
                     },
                     credentials: "include",
-                    body: JSON.stringify({ _id: userData._id, imageUrl: imgSrc })
+                    body: JSON.stringify({ _id: userData.userData._id, imageUrl: imgSrc })
                 });
 
                 const data = await res.json();

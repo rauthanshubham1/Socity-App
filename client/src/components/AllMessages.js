@@ -24,6 +24,10 @@ const AllMessages = () => {
     const createGlobalChat = async (e) => {
         try {
             e.preventDefault();
+            if (globalChatName === "") { 
+                alert("Please name the global chats");
+                return;
+            }
             const sessionTkn = document.cookie.split(";")[1].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/addNewGlobalChats`, {
                 method: "POST",
@@ -34,7 +38,6 @@ const AllMessages = () => {
                 credentials: "include",
                 body: JSON.stringify({ globalChatName, sessionTkn })
             })
-
             const data = await res.json();
             if (res.status === 200) {
                 setGlobalChats([...globalChats, data])
@@ -60,7 +63,7 @@ const AllMessages = () => {
                 body: JSON.stringify({ sessionTkn })
             });
             const data = await res.json();
-            
+
             if (res.status === 200) {
                 setGlobalChats(data.allGlobalChats);
                 setUserData(data.userData);

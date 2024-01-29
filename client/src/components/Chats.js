@@ -50,13 +50,17 @@ const Chats = () => {
     }
 
     const sendMsg = (e) => {
-        e.preventDefault();
+        e.preventDefault()
+        if (textBoxMsg === "") {
+            alert("Please enter the message");
+            return;
+        }
         if (joinRoom) {
             socket.emit("send_message", { message: textBoxMsg, roomId: roomId, sender: user_name });
             setAllMessagesArray([...allMessagesArray, { sender: user_name, message: textBoxMsg }]);
             setTextBoxMsg("");
         } else {
-            console.log("Please join the room")
+            alert("Please join the room");
         }
     }
 

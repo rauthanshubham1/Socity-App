@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .loadingContainer img {
   height: 50px;
 }
@@ -30,6 +31,8 @@
   display: flex;
   width: 90%;
   margin-top: 4%;
+  min-height: 90vh;
+  height: auto;
 }
 
 .suggestions {
