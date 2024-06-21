@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .loadingContainer img {
   height: 50px;
 }
@@ -11,28 +12,32 @@
   border: 2px solid #949494;
   margin-right: 500px;
   margin-left: 500px;
-  margin-top: 100px;
+  margin-top: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  /* justify-content: space-between; */
   height: 650px;
   align-items: center;
   color: white;
 }
 
 .signupFormContainer img {
+  margin-top: 70px;
+  margin-bottom: 40px;
   width: 350px;
 }
 
 .formStyling {
+  /* border: 2px solid red; */
   height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  /* justify-content: space-between; */
 }
 
 .formItem input {
+  margin-left: 10px;
   background-color: #fafafa;
   font-size: 15px;
   border-radius: 4px;
@@ -46,11 +51,14 @@
   color: red;
   margin: 0px 0px 10px 2px;
 }
+
 .logIn {
   font-size: 15px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
 }
+
 .logIn a {
   color: #027ffe;
 }

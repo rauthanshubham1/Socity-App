@@ -82,6 +82,9 @@ const SignupPage = () => {
             </div>
             <div className='signupFormContainer'>
                 <img src={LogoNoBg} alt="Logo not available" />
+                < div className='logIn' >
+                    Have an account?  &nbsp; <Link to="/">Login</Link>
+                </ div>
 
                 <form method='post' className='formStyling' onSubmit={handleSubmit}>
                     <div className='formItem'>
@@ -108,10 +111,6 @@ const SignupPage = () => {
                         <button type='submit' className="button-22" >Sign Up</button>
                     </div>
                 </form >
-
-                < div className='logIn' >
-                    Have an account ?  &nbsp; <Link to="/">Login</Link>
-                </ div>
 
             </div >
         </>
