@@ -26,7 +26,7 @@ const LoginPage = () => {
 
     const verifyUser = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
                 headers: {

@@ -18,7 +18,7 @@ const SearchedUser = () => {
     const checkFollowStatus = async () => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
@@ -44,7 +44,7 @@ const SearchedUser = () => {
     const handleFollowBtn = async (searchedUserData) => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {

@@ -28,7 +28,7 @@ const AllMessages = () => {
                 alert("Please name the global chats");
                 return;
             }
-            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/addNewGlobalChats`, {
                 method: "POST",
                 headers: {
@@ -52,7 +52,7 @@ const AllMessages = () => {
 
     const showGlobalChats = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[1].split("=")[1];
+            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/getGlobalChats`, {
                 method: "POST",
                 headers: {
