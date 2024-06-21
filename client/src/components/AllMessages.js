@@ -3,7 +3,7 @@ import Header from "./Header"
 import Inbox from "./Inbox"
 import "../componentsStyle/AllMessages.css"
 import { useNavigate } from "react-router-dom"
-
+import jscookie from "js-cookie";
 
 const AllMessages = () => {
     const navigate = useNavigate();
@@ -28,7 +28,8 @@ const AllMessages = () => {
                 alert("Please name the global chats");
                 return;
             }
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/addNewGlobalChats`, {
                 method: "POST",
                 headers: {
@@ -52,7 +53,8 @@ const AllMessages = () => {
 
     const showGlobalChats = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/getGlobalChats`, {
                 method: "POST",
                 headers: {

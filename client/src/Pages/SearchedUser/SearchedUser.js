@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from '../../components/Header';
 import "../../componentsStyle/Profile.css"
 import Loading from "../../assets/Loading.gif"
-
+import jscookie from "js-cookie";
 const SearchedUser = () => {
     const location = useLocation();
     const searchedUserData = location.state;
@@ -18,7 +18,8 @@ const SearchedUser = () => {
     const checkFollowStatus = async () => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {
@@ -44,7 +45,8 @@ const SearchedUser = () => {
     const handleFollowBtn = async (searchedUserData) => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/checkFollowStatus`, {
                 method: "POST",
                 headers: {

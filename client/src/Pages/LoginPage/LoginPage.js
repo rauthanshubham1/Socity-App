@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { loginSchema } from "../../formValidation/loginValidation"
 import Loading from "../../assets/Loading.gif"
-
+import jscookie from "js-cookie";
 const LoginPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -26,7 +26,8 @@ const LoginPage = () => {
 
     const verifyUser = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
                 headers: {

@@ -3,7 +3,7 @@ import "../componentsStyle/Profile.css"
 import Header from "./Header"
 import { useNavigate } from "react-router-dom"
 import Loading from "../assets/Loading.gif"
-
+import jscookie from "js-cookie"
 const Profile = () => {
     const [user, setUser] = useState({
         name: "",
@@ -22,7 +22,8 @@ const Profile = () => {
     const verifyUser = async () => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
                 headers: {

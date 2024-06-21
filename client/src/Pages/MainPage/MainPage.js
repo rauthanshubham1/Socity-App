@@ -5,7 +5,7 @@ import "./MainPage.css"
 import AccSuggestion from '../../components/AccSuggestion'
 import Header from '../../components/Header'
 import Loading from "../../assets/Loading.gif"
-
+import jscookie from "js-cookie";
 const MainPage = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({});
@@ -17,7 +17,8 @@ const MainPage = () => {
 
     const verifyUser = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
                 headers: {
@@ -44,7 +45,8 @@ const MainPage = () => {
     const suggestAccount = async () => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/suggestUsers`, {
                 method: "POST",
                 headers: {

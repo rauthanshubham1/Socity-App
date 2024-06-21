@@ -5,7 +5,7 @@ import Header from "./Header"
 import { useNavigate } from 'react-router-dom'
 import defaultFeed from "../assets/defaultFeed.png"
 import Loading from "../assets/Loading.gif"
-
+import jscookie from "js-cookie";
 const Feed = () => {
     const navigate = useNavigate();
     const [feedPosts, setFeedPosts] = useState([])
@@ -19,7 +19,8 @@ const Feed = () => {
 
     const verifyUser = async () => {
         try {
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/verifyUser`, {
                 method: "POST",
                 headers: {
@@ -48,7 +49,8 @@ const Feed = () => {
     const getFeedPosts = async () => {
         try {
             document.querySelector(".loadingContainer").style.display = "flex";
-            const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            // const sessionTkn = document.cookie.split(";")[0].split("=")[1];
+            const sessionTkn = jscookie.get("sessionTkn");
             const res = await fetch(`${process.env.REACT_APP_ROUTE}/getFeedPosts`, {
                 method: "POST",
                 headers: {
