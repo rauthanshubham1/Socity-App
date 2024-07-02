@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .loadingContainer img {
   height: 50px;
 }
@@ -34,15 +35,15 @@
   width: 350px;
 }
 
-.formStyling {
-  height: 250px;
+.loginFormStyling {
+  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
-.formItem input {
+.loginFormItem input {
   background-color: #fafafa;
   font-size: 15px;
   border-radius: 4px;
@@ -51,7 +52,8 @@
   border: 3px solid black;
   padding-left: 10px;
 }
-.formItem h6 {
+
+.loginFormItem h6 {
   color: red;
   margin: 0px 0px 10px 2px;
 }
@@ -62,6 +64,7 @@
   justify-content: center;
   color: white;
 }
+
 .signUp a {
   color: #027ffe;
 }

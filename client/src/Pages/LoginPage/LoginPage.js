@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import { loginSchema } from "../../formValidation/loginValidation"
 import Loading from "../../assets/Loading.gif"
 import jscookie from "js-cookie";
+
 const LoginPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -87,16 +88,18 @@ const LoginPage = () => {
                 </div>
                 <div className='loginFormContainer'>
                     <img src={LogoNoBg} alt="Logo not available" />
-                    <form method='post' className='formStyling' onSubmit={handleSubmit}>
-                        <div className='formItem'>
+
+
+                    <form method='post' className='loginFormStyling' onSubmit={handleSubmit}>
+                        <div className='loginFormItem'>
                             <input type="text" placeholder='Email' name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                             {errors.email && touched.email ? <h6>{errors.email}</h6> : null}
                         </div>
-                        <div className='formItem'>
+                        <div className='loginFormItem'>
                             <input type="password" placeholder='Password' name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                             {errors.password && touched.password ? <h6>{errors.password}</h6> : null}
                         </div>
-                        <div className='formItem'>
+                        <div className='loginFormItem'>
                             <button type='submit' className="button-22">Login</button>
                         </div>
                     </form>
@@ -104,6 +107,7 @@ const LoginPage = () => {
                     <div className='signUp'>
                         Don't have an account? &nbsp; <Link to="/signup">Sign up</Link>
                     </div>
+
                 </div >
             </div >
         </>

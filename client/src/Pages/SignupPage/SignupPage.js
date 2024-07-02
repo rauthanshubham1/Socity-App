@@ -82,35 +82,36 @@ const SignupPage = () => {
             </div>
             <div className='signupFormContainer'>
                 <img src={LogoNoBg} alt="Logo not available" />
-                < div className='logIn' >
-                    Have an account?  &nbsp; <Link to="/">Login</Link>
-                </ div>
 
-                <form method='post' className='formStyling' onSubmit={handleSubmit}>
-                    <div className='formItem'>
+                <form method='post' className='signFormStyling' onSubmit={handleSubmit}>
+                    <div className='signFormItem'>
                         <input type="text" placeholder='Name' name="name" value={values.name} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                         {errors.name && touched.name ? (<h6 >{errors.name}</h6>) : null}
                     </div>
-                    <div className='formItem'>
+                    <div className='signFormItem'>
                         <input type="text" placeholder='Email' name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                         {errors.email && touched.email ? (<h6 >{errors.email}</h6>) : null}
                     </div>
-                    <div className='formItem'>
+                    <div className='signFormItem'>
                         <input type="text" placeholder='Phone' name="phone" value={values.phone} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                         {errors.phone && touched.phone ? (<h6 >{errors.phone}</h6>) : null}
                     </div>
-                    <div className='formItem'>
+                    <div className='signFormItem'>
                         <input type="password" placeholder='Password' name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                         {errors.password && touched.password ? (<h6 >{errors.password}</h6>) : null}
                     </div>
-                    <div className='formItem'>
+                    <div className='signFormItem'>
                         <input type="text" placeholder='Confirm Password' name='cPassword' value={values.cPassword} onChange={handleChange} onBlur={handleBlur} autoComplete='off' />
                         {errors.cPassword && touched.cPassword ? (<h6 >{errors.cPassword}</h6>) : null}
                     </div>
-                    <div className='formItem'>
+                    <div className='signFormItem'>
                         <button type='submit' className="button-22" >Sign Up</button>
                     </div>
                 </form >
+
+                < div className='logIn' >
+                    Have an account?  &nbsp; <Link to="/">Login</Link>
+                </ div>
 
             </div >
         </>

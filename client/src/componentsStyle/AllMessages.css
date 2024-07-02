@@ -13,6 +13,12 @@
   height: 70px;
 }
 
+.formItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .formItem input {
   background-color: #fafafa;
   font-size: 15px;
